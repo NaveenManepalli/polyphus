@@ -1,0 +1,101 @@
+/* ==========================================================================
+   gallery.css — "the river": two rows of photographs drifting past in
+   opposite directions, grey until you touch one.
+
+   How the loop works
+   ------------------
+   Each track holds its images TWICE and animates from 0 to -50%. At -50%
+   the second copy sits exactly where the first started, so the jump back to
+   0 is invisible. That is the whole trick, and it is why the markup repeats
+   every image — if you add one to a row, add it to both halves or the seam
+   will show.
+
+   The two rows run at different speeds (68s / 92s) and in opposite
+   directions. Matching them would read as one moving block; mismatching
+   them is what makes it feel like drift rather than a conveyor.
+
+   The rows are NOT paused on hover, by design. The image colours in and
+   lifts as it passes under the cursor and greys again as it leaves —
+   a spotlight travelling along the row rather than a frozen strip.
+   ========================================================================== */
+
+.river {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 1.8vw, 26px);
+  padding-block: clamp(76px, 8vw, 118px);
+
+  /* Clip the tracks, which are far wider than the viewport, and dissolve
+     both ends so images enter and leave instead of being cut off. */
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+}
+
+.river__track {
+  display: flex;
+  gap: clamp(14px, 1.8vw, 26px);
+  width: max-content;
+  will-change: transform;
+  transform: translateZ(0);      /* own layer — keeps the drift off the main thread */
+  backface-visibility: hidden;
+}
+
+.river__track--a { animation: river-right 68s linear infinite; }
+.river__track--b { animation: river-left  92s linear infinite; }
+
+@keyframes river-left {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes river-right {
+  from { transform: translate3d(-50%, 0, 0); }
+  to   { transform: translate3d(0, 0, 0); }
+}
+
+.river__img {
+  height: clamp(150px, 20vw, 250px);
+  width: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 14px;
+  flex-shrink: 0;
+  background: rgba(39, 28, 64, 0.05);
+
+  /* Grey, with a little contrast put back so the photographs do not go flat. */
+  filter: grayscale(1) contrast(1.08) brightness(0.98);
+  transition: filter 0.5s,
+              transform 0.5s cubic-bezier(0.22, 0.68, 0.28, 1),
+              box-shadow 0.5s;
+}
+
+.river__img:hover {
+  filter: grayscale(0) contrast(1);
+  transform: translateY(-6px) scale(1.04);
+  /* Lavender ring, not orange — the accent is reserved for things that are
+     actually running or actionable, and a photograph is neither. */
+  box-shadow: 0 18px 40px rgba(39, 28, 64, 0.18),
+              0 0 0 2px rgba(211, 194, 255, 0.75);
+  z-index: 2;
+}
+
+/* Someone who has asked for calmer motion gets a still strip they can push
+   themselves, rather than something drifting under the cursor forever. */
+@media (prefers-reduced-motion: reduce) {
+  .river {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .river::-webkit-scrollbar { display: none; }
+
+  .river__track {
+    animation: none;
+    transform: none;
+  }
+
+  .river__img { transition: filter 0.2s; }
+  .river__img:hover { transform: none; }
+}

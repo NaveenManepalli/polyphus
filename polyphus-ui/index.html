@@ -27,7 +27,7 @@
 <link rel="stylesheet" href="css/sections/showcase.css">
 <link rel="stylesheet" href="css/sections/crew.css">
 <link rel="stylesheet" href="css/sections/audience.css">
-<link rel="stylesheet" href="css/sections/roles.css">
+<link rel="stylesheet" href="css/sections/gallery.css">
 <link rel="stylesheet" href="css/sections/cta.css">
 <link rel="stylesheet" href="css/sections/footer.css">
 </head>
@@ -63,7 +63,7 @@
   <!-- z 3/4 — everything that stays above the landscape -->
   <nav class="hero__nav" aria-label="Primary">
     <a href="#top" aria-label="Polyphus home">
-      <img class="logo-mark" src="assets/icons/logo-badge.svg" alt="Polyphus" width="36" height="36">
+      <img class="logo-mark" src="assets/icons/logo-mark.svg" alt="Polyphus" width="37" height="24">
     </a>
     <div class="hero__links">
       <a href="#how">How it works</a>
@@ -409,71 +409,45 @@
 
 
 <!-- ==========================================================================
-     WHAT EACH AGENT DOES — the rail
+     THE RIVER — two rows of photographs drifting in opposite directions.
+     Each row holds its images twice: the keyframes travel 0 → -50%, so the
+     second copy is what makes the loop seamless. Add or remove an image and
+     you must do it in BOTH halves of that row.
      ========================================================================== -->
-<section class="roles">
-  <div class="roles__inner">
-    <div class="roles__head">
-      <div>
-        <h2 class="h2 roles__title" data-reveal>What each agent actually does</h2>
-        <p class="roles__lede" data-reveal data-delay="0.08s">
-          Six roles. Four of them ship today.
-          The last two are in build and we will say so until they aren't.
-        </p>
-      </div>
-      <div class="roles__nav">
-        <button class="roles__btn" data-rail-prev aria-label="Previous roles">
-          <img src="assets/icons/carousel-prev.svg" alt="">
-        </button>
-        <button class="roles__btn" data-rail-next aria-label="Next roles">
-          <img src="assets/icons/carousel-next.svg" alt="">
-        </button>
-      </div>
-    </div>
+<section class="river" aria-label="Photographs from the community">
+  <div class="river__track river__track--a">
+    <!-- first pass -->
+      <img class="river__img" src="assets/images/bottom/1.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/2.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/3.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/4.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/5.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/6.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/7.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
+    <!-- second pass — the seamless half -->
+      <img class="river__img" src="assets/images/bottom/1.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/2.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/3.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/4.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/5.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/6.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/7.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
   </div>
-
-  <div class="roles__rail" data-rail>
-    <article class="role">
-      <span class="role__icon"><img src="assets/icons/icon-research.svg" alt=""></span>
-      <p class="role__name">Research</p>
-      <p class="role__what">Reads the market before anyone writes a line of code. Sizes it, names the competitors, and picks the opening worth taking.</p>
-      <div class="role__foot"><span class="tag tag--live">Built</span></div>
-    </article>
-
-    <article class="role">
-      <span class="role__icon"><img src="assets/icons/icon-design.svg" alt=""></span>
-      <p class="role__name">Design</p>
-      <p class="role__what">Turns the brief into a brand: a name, a mark, a palette, a typeface, and every screen the product needs.</p>
-      <div class="role__foot"><span class="tag tag--live">Built</span></div>
-    </article>
-
-    <article class="role">
-      <span class="role__icon"><img src="assets/icons/icon-build.svg" alt=""></span>
-      <p class="role__name">Engineering</p>
-      <p class="role__what">Writes the product. Takes the design and the research and turns them into something you can actually open.</p>
-      <div class="role__foot"><span class="tag tag--live">Built</span></div>
-    </article>
-
-    <article class="role">
-      <span class="role__icon"><img src="assets/icons/icon-market.svg" alt=""></span>
-      <p class="role__name">Marketing</p>
-      <p class="role__what">Writes the launch, picks the channels, drafts the copy, and comes back to you before it spends a euro.</p>
-      <div class="role__foot"><span class="tag tag--live">Built</span></div>
-    </article>
-
-    <article class="role">
-      <span class="role__icon"><img src="assets/icons/icon-growth.svg" alt=""></span>
-      <p class="role__name">Growth</p>
-      <p class="role__what">Will watch what people do with the product and change it &mdash; pricing, onboarding, the things that compound.</p>
-      <div class="role__foot"><span class="tag tag--soon">In build</span></div>
-    </article>
-
-    <article class="role">
-      <span class="role__icon"><img src="assets/icons/icon-support.svg" alt=""></span>
-      <p class="role__name">Support</p>
-      <p class="role__what">Will answer your customers day and night, and escalate to you the moment something needs a human.</p>
-      <div class="role__foot"><span class="tag tag--soon">In build</span></div>
-    </article>
+  <div class="river__track river__track--b">
+    <!-- first pass -->
+      <img class="river__img" src="assets/images/bottom/8.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/9.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/10.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/11.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/12.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/13.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
+    <!-- second pass — the seamless half -->
+      <img class="river__img" src="assets/images/bottom/8.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/9.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/10.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/11.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/12.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/13.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
   </div>
 </section>
 
@@ -541,7 +515,6 @@
 <script src="js/modules/smooth-scroll.js"></script>
 <script src="js/modules/parallax.js"></script>
 <script src="js/modules/reveal.js"></script>
-<script src="js/modules/carousel.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

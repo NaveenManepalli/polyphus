@@ -84,15 +84,13 @@
 
 
 /* --------------------------------------------------------------------------
-   The mark. Same construction as the favicon — dark rounded square, cream
-   brackets, orange block — so the tab icon and the nav read as one logo
-   rather than two unrelated drawings.
+   The mark: brackets around a block cursor, drawn straight onto whatever is
+   behind it. No plate — the sky is the background.
    -------------------------------------------------------------------------- */
 
 .logo-mark {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
+  width: 37px;
+  height: 24px;
   transition: transform var(--dur-fast) var(--ease-out);
 }
 

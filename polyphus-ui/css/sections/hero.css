@@ -3,77 +3,84 @@
 
    How it is built, back to front:
 
-     1  .hero            1800px tall, painted with the back sky gradient
-     2  .hero__stage     inset 50px, clips everything below
-     3    .hero__sky     a taller (2572px) gradient plate
-     4    .hero__glow    a 572px disc, blurred 60px — the bloom behind the type
-     5  .hero__wordmark  "Welcome to" + the polyphus_ logotype       (z 1)
-     6  .hero__layer ×4  cut-out mountain plates, each 1440×2572     (z 2)
-     7  .hero__nav / __strip / __tagline / __lede                    (z 3)
+     1  .hero            the section, painted with the back sky gradient
+     2  .hero__sky       a taller gradient plate
+     3  .hero__glow      a blurred disc — the bloom behind the type
+     4  .hero__wordmark  "Welcome to" + the polyphus_ logotype        (z 1)
+     5  .hero__stage     clips the plates
+     6    .hero__layer ×4  cut-out mountain plates                    (z 2)
+     7  .hero__nav / __tagline / __strip / __lede                     (z 3/4)
 
-   Step 6 sitting above step 5 is the whole trick: the power station and the
-   clouds are transparent PNGs, so the mountain occludes the letterforms and
-   the wordmark reads as though it is buried in the landscape. The logotype
-   is live text, so it stays editable — it is not baked into an image.
+   Step 6 sitting above step 4 is the whole trick: the plates are transparent
+   PNGs, so the mountain occludes the letterforms and the wordmark reads as
+   though it is buried in the landscape. The logotype is live text, so it
+   stays editable — it is not baked into an image.
 
-   Vertical offsets are expressed in vw so the composition scales exactly
-   below the 1440px design width, and clamp at their design pixel value
-   above it. 235px @ 1440 = 16.319vw, and so on.
+   ONE SCALE, --scene
+   ------------------
+   The hero is a poster with a fixed composition: the pink band of the sky
+   has to land behind the wordmark, the power station has to sit under it,
+   the ridge has to fill the bottom of the first screen. That only holds if
+   the artwork and the type scale *together*.
+
+   So every offset below is a fraction of --scene rather than a px value or
+   an independent vw. The fractions are the design pixels at 1440 ÷ 1440,
+   and each one is written next to its rule. Change --scene and the entire
+   scene moves as a unit.
+
+   The bug this replaces: the plates were sized from the viewport while the
+   type was capped at its 1440 pixel values. Above 1440 the landscape kept
+   growing and the type did not, so the pink band slid out from behind the
+   wordmark — at 1900px it sat 123px below it. Do not reintroduce a px cap
+   on anything positioned in scene coordinates.
    ========================================================================== */
 
 .hero {
+  --scene: 100vw;
+
   position: relative;
-  height: min(125vw, var(--hero-h));
+  height: calc(var(--scene) * 1.25);          /* 1800 */
   background: var(--sky-back);
   overflow: hidden;
   isolation: isolate;
-
-  /* Plates are always at least as wide as the design canvas so a wide
-     monitor never shows a seam at the edge of the artwork. */
-  --stage-w: max(1440px, 100vw);
 }
 
-/* -- 3. sky plate and 4. the bloom ----------------------------------------
+/* -- 2. sky plate and 3. the bloom ----------------------------------------
    Both live directly in the hero at the default stacking level, so the
-   logotype (z 1) sits in front of them and the mountains (z 2) in front
-   of it. Put these back inside the stage and the sky buries the wordmark.
+   logotype (z 1) sits in front of them and the mountains (z 2) in front of
+   it. Put these back inside the stage and the sky buries the wordmark.
    ------------------------------------------------------------------------- */
 
 .hero__sky {
   position: absolute;
   top: 0;
   left: 50%;
-  width: var(--stage-w);
-  height: calc(var(--stage-w) * 1.78611);
-  margin-left: calc(var(--stage-w) * -0.5);
+  width: var(--scene);
+  height: calc(var(--scene) * 1.786111);      /* 2572 */
+  margin-left: calc(var(--scene) * -0.5);
   background: var(--sky-front);
 }
 
-/* Centring note: these offsets are max(), not min(). The box is
-   `width: min(Xvw, Ypx)` and the offset must be -width/2 — and
-   -min(a,b) is max(-a,-b). Using min() here picks the MORE negative
-   value below 1440px, which drags the box left of centre and off the
-   screen entirely under ~1280px. Positive min()s in this file are fine. */
 .hero__glow {
   position: absolute;
-  top: min(17.917vw, 258px);
+  top: calc(var(--scene) * 0.179167);         /* 258 */
   left: 50%;
-  width: min(39.722vw, 572px);
-  height: min(39.722vw, 572px);
-  margin-left: max(-19.861vw, -286px);
+  width: calc(var(--scene) * 0.397222);       /* 572 */
+  height: calc(var(--scene) * 0.397222);
+  margin-left: calc(var(--scene) * -0.198611);
   border-radius: 999px;
   background: var(--glow);
   filter: blur(60px);
 }
 
-/* -- 2. clipping stage ----------------------------------------------------- */
+/* -- 5. clipping stage ----------------------------------------------------- */
 
 .hero__stage {
   position: absolute;
-  top: min(3.472vw, 50px);
+  top: calc(var(--scene) * 0.034722);         /* 50 */
   left: 0;
   right: 0;
-  height: min(125vw, var(--hero-h));
+  height: calc(var(--scene) * 1.25);
   overflow: hidden;
   z-index: 2;
   pointer-events: none;
@@ -85,9 +92,9 @@
   position: absolute;
   top: 0;
   left: 50%;
-  width: var(--stage-w);
-  height: calc(var(--stage-w) * 1.78611);
-  margin-left: calc(var(--stage-w) * -0.5);
+  width: var(--scene);
+  height: calc(var(--scene) * 1.786111);      /* 2572 */
+  margin-left: calc(var(--scene) * -0.5);
   will-change: transform;
 }
 
@@ -97,11 +104,13 @@
   object-fit: cover;
 }
 
-/* The nearest plate starts 155px higher so its ridge already fills the
-   bottom of the first screen. */
-.hero__layer--near { top: min(-10.764vw, -155px); }
+/* The nearest plate starts higher so its ridge already fills the bottom of
+   the first screen. */
+.hero__layer--near { top: calc(var(--scene) * -0.107639); }   /* -155 */
 
-/* -- 1. nav ---------------------------------------------------------------- */
+/* -- 1. nav ---------------------------------------------------------------
+   Chrome, not scene — it keeps its own size at every width.
+   ------------------------------------------------------------------------- */
 
 .hero__nav {
   position: absolute;
@@ -148,34 +157,34 @@
 
 .hero__start:hover { opacity: 1; background: #ff5630; }
 
-/* -- 5. wordmark ----------------------------------------------------------- */
+/* -- 4. wordmark ----------------------------------------------------------- */
 
 .hero__wordmark {
   position: absolute;
-  top: min(16.319vw, 235px);
+  top: calc(var(--scene) * 0.163194);         /* 235 */
   left: 50%;
-  width: min(88.958vw, 1281px);
-  margin-left: max(-44.479vw, -640.5px);
+  width: calc(var(--scene) * 0.889583);       /* 1281 */
+  margin-left: calc(var(--scene) * -0.444792);
   z-index: 1;
 }
 
 .hero__welcome {
   position: absolute;
-  top: min(1.181vw, 17px);
+  top: calc(var(--scene) * 0.011806);         /* 17 */
   left: 0;
-  font-size: var(--fs-tagline);
+  font-size: max(18px, calc(var(--scene) * 0.022222));   /* 32 */
   font-weight: 600;
   line-height: var(--lh-tight);
   letter-spacing: var(--ls-tight);
   color: var(--off-white);
 }
 
-/* polyphus_ — lowercase in the wordmark, always. Sized so the word fills
-   the 1281px measure the scene was composed around. */
+/* polyphus_ — lowercase in the wordmark, always. Sized so the word fills the
+   measure the scene was composed around. */
 .hero__logotype {
   margin: 0;
   font-family: var(--font-display);
-  font-size: min(15.9vw, 229px);
+  font-size: calc(var(--scene) * 0.159028);   /* 229 */
   font-weight: 700;
   line-height: 1.04;
   letter-spacing: -0.055em;
@@ -183,20 +192,17 @@
   text-transform: lowercase;
 }
 
-/* Colour and blink live on .cursor in components.css. */
-.hero__logotype .cursor { margin-left: -0.02em; }
-
 /* -- 7. foreground copy ---------------------------------------------------- */
 
 .hero__tagline {
   position: absolute;
-  top: min(33.958vw, 489px);
+  top: calc(var(--scene) * 0.339583);         /* 489 */
   left: 50%;
-  width: min(88.958vw, 1281px);
-  margin-left: max(-44.479vw, -640.5px);
+  width: calc(var(--scene) * 0.889583);
+  margin-left: calc(var(--scene) * -0.444792);
   z-index: 3;
   text-align: right;
-  font-size: var(--fs-tagline);
+  font-size: max(18px, calc(var(--scene) * 0.022222));   /* 32 */
   font-weight: 600;
   line-height: var(--lh-tight);
   letter-spacing: var(--ls-tight);
@@ -205,10 +211,10 @@
 
 .hero__strip {
   position: absolute;
-  top: min(52.083vw, 750px);
+  top: calc(var(--scene) * 0.520833);         /* 750 */
   left: 50%;
-  width: min(70.486vw, 1015px);
-  margin-left: max(-35.243vw, -507.5px);
+  width: calc(var(--scene) * 0.704861);       /* 1015 */
+  margin-left: calc(var(--scene) * -0.352431);
   z-index: 3;
   display: flex;
   align-items: center;
@@ -221,7 +227,7 @@
    here rather than being quietly listed alongside the ones that are. */
 .hero__mark {
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: max(11px, calc(var(--scene) * 0.009028));   /* 13 */
   font-weight: 500;
   letter-spacing: var(--ls-kicker);
   text-transform: uppercase;
@@ -229,9 +235,7 @@
   white-space: nowrap;
 }
 
-.hero__mark--soon {
-  color: rgba(255, 255, 255, 0.5);
-}
+.hero__mark--soon { color: rgba(255, 255, 255, 0.5); }
 
 .hero__mark--soon::after {
   content: " · soon";
@@ -242,12 +246,12 @@
 /* The line that fades in once the mist has taken over the screen. */
 .hero__lede {
   position: absolute;
-  top: min(83.194vw, 1198px);
+  top: calc(var(--scene) * 0.831944);         /* 1198 */
   left: 0;
   right: 0;
   z-index: 3;
   padding-inline: var(--gutter);
-  font-size: var(--fs-hero-lede);
+  font-size: max(20px, calc(var(--scene) * 0.024306));   /* 35 */
   line-height: 1;
   color: #fff;
 }
@@ -257,13 +261,14 @@
 
 
 /* --------------------------------------------------------------------------
-   Tablet / phone — the 1440 composition stops working once the wordmark
-   would be smaller than the body copy, so below 810px the scene is rebuilt
-   as a taller stack with the type above the fold.
+   Phone — the poster stops working once the logotype would be smaller than
+   the body copy, so below 810px the scene is rebuilt as a taller stack with
+   the type above the fold. --scene is pinned wider than the viewport so the
+   artwork stays legible instead of shrinking to a smudge.
    -------------------------------------------------------------------------- */
 
 @media (max-width: 809px) {
-  .hero        { height: 200vw; min-height: 620px; --stage-w: max(900px, 175vw); }
+  .hero        { --scene: max(900px, 175vw); height: 200vw; min-height: 620px; }
   .hero__stage { height: 200vw; min-height: 620px; top: 24px; }
 
   .hero__glow {
@@ -274,6 +279,7 @@
   }
 
   .hero__wordmark { top: 26vw; width: calc(100% - 2 * var(--gutter)); left: var(--gutter); margin-left: 0; }
+  .hero__logotype { font-size: 15.9vw; }
   .hero__welcome  { top: -26px; font-size: 20px; }
 
   .hero__tagline {

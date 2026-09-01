@@ -127,6 +127,22 @@ No product screenshots, brand marks, staff photographs or third-party logotypes
 were carried across. The scenery is placeholder art: commission or licence
 replacements before this page goes public.
 
+> **Swapping the video.** `clouds-loop.mp4` must be **H.264 (`avc1`), 8-bit
+> `yuv420p`**. Chrome on Windows cannot decode HEVC/H.265 (`hvc1`) in a
+> `<video>` element, and it fails silently in the worst way: the element
+> reports `playing`, the clock advances, and it decodes **zero frames**, so
+> the section renders empty with no console error and no failed request.
+> Most phone and camera exports are HEVC by default. Convert before dropping
+> one in:
+>
+> ```
+> ffmpeg -i new-clip.mov -map 0:v:0 -an -sn -dn >   -c:v libx264 -profile:v high -preset slow -crf 22 >   -pix_fmt yuv420p -movflags +faststart clouds-loop.mp4
+> ```
+>
+> To check what you have: `ffprobe -show_entries stream=codec_name,pix_fmt`.
+> Chrome's own tell is `video.getVideoPlaybackQuality().totalVideoFrames` —
+> if it stays at 0 while the video "plays", the codec is the problem.
+
 ## 7. Working here
 
 - **Edit in place.** No build. Change a token in `css/tokens.css` and the whole

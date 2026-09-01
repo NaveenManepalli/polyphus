@@ -115,7 +115,7 @@
   padding-inline: var(--gutter);
 }
 
-.hero__logo { width: 37px; height: 24px; }
+/* The mark itself is sized by .logo-mark in components.css. */
 
 .hero__links {
   display: flex;
@@ -183,10 +183,8 @@
   text-transform: lowercase;
 }
 
-.hero__logotype .cursor {
-  margin-left: -0.02em;
-  color: var(--orange);
-}
+/* Colour and blink live on .cursor in components.css. */
+.hero__logotype .cursor { margin-left: -0.02em; }
 
 /* -- 7. foreground copy ---------------------------------------------------- */
 

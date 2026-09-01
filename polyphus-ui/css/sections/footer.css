@@ -1,0 +1,108 @@
+/* ==========================================================================
+   footer.css — the surreal blue scene the page ends on.
+   Sits above the sticky careers panel and slides up over it.
+   ========================================================================== */
+
+.footer {
+  position: relative;
+  z-index: 3;
+  min-height: 988px;
+  padding: 80px var(--gutter) 60px;
+  border-radius: var(--r-panel) var(--r-panel) 0 0;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--lavender);
+}
+
+.footer__scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.footer__inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 60px;
+  max-width: 1300px;
+  margin-inline: auto;
+}
+
+/* polyphus_ set as live text, so the footer mark stays editable. */
+.footer__wordmark {
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  text-transform: lowercase;
+  color: var(--lavender);
+}
+
+.footer__wordmark .cursor { color: var(--orange); }
+
+.footer__tagline {
+  margin-top: 12px;
+  font-size: var(--fs-lead);
+  font-weight: 400;
+  color: var(--lavender);
+}
+
+.footer__cols {
+  display: grid;
+  grid-template-columns: 187px auto;
+  gap: 0 20px;
+}
+
+.footer__col-title {
+  font-size: var(--fs-lead);
+  font-weight: 700;
+  letter-spacing: var(--ls-tight);
+  color: var(--lavender);
+}
+
+.footer__links {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 27px;
+}
+
+.footer__links a {
+  font-size: var(--fs-lead);
+  font-weight: 500;
+  letter-spacing: var(--ls-tight);
+  color: var(--lavender);
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.footer__links a:hover { opacity: 0.72; }
+
+.footer__legal {
+  position: absolute;
+  left: var(--gutter);
+  bottom: 58px;
+  font-family: var(--font-ui);
+  font-size: var(--fs-ui);
+  font-weight: 400;
+  color: var(--cream);
+}
+
+.footer__legal strong { font-weight: 700; }
+
+@media (max-width: 809px) {
+  .footer {
+    min-height: 620px;
+    padding-top: 56px;
+    padding-bottom: 120px;
+  }
+
+  .footer__inner { flex-direction: column; gap: 40px; }
+  .footer__wordmark { font-size: 34px; }
+  .footer__cols { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .footer__legal { bottom: 32px; }
+}

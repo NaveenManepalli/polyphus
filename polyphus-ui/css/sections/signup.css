@@ -1,0 +1,262 @@
+/* ==========================================================================
+   signup.css — the waitlist page.
+
+   One screen, no scrolling: the same sky the home page opens on, the near
+   mountain plate anchored to the bottom for depth, and a single column of
+   content over it. No parallax and no Lenis here — this page is a form, and
+   a form should not move under the person filling it in.
+   ========================================================================== */
+
+.signup {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background: var(--sky-back);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* The bloom, same disc as the home hero. */
+.signup__glow {
+  position: absolute;
+  top: 6%;
+  left: 50%;
+  width: min(52vw, 660px);
+  height: min(52vw, 660px);
+  margin-left: min(-26vw, -330px);
+  border-radius: 999px;
+  background: var(--glow);
+  filter: blur(70px);
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* Foreground ridge, bled off the bottom edge. */
+.signup__ridge {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: max(1440px, 100vw);
+  margin-left: calc(max(1440px, 100vw) * -0.5);
+  height: 46vh;
+  object-fit: cover;
+  /* The plate is a tall PNG with the ridge at its base and transparency
+     above it — sample the bottom, or you get an empty crop. */
+  object-position: 50% 100%;
+  /* cover crops the plate mid-slope, so fade the cut into the sky rather
+     than leaving a hard horizontal seam across the page. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 34%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 34%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+
+/* -- top bar --------------------------------------------------------------- */
+
+.signup__top {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: min(2.083vw, 30px) var(--gutter) 0;
+}
+
+.signup__home {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.82);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.signup__home:hover { color: #fff; }
+.signup__home span { transition: transform var(--dur-fast) var(--ease-out); }
+.signup__home:hover span { transform: translateX(-3px); }
+
+
+/* -- the column ------------------------------------------------------------ */
+
+.signup__main {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 48px var(--gutter) 64px;
+  text-align: center;
+}
+
+.signup__logotype {
+  font-family: var(--font-display);
+  font-size: clamp(46px, 6.6vw, 96px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.055em;
+  text-transform: lowercase;
+  color: #fff;
+}
+
+.signup__logotype .cursor { margin-left: -0.02em; color: var(--orange); }
+
+.signup__kicker {
+  margin-top: 28px;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.signup__title {
+  margin-top: 14px;
+  max-width: 15ch;
+  font-family: var(--font-display);
+  font-size: clamp(30px, 3.6vw, 52px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  color: #fff;
+  text-wrap: balance;
+}
+
+.signup__lede {
+  margin-top: 18px;
+  max-width: 46ch;
+  font-size: clamp(16px, 1.39vw, 20px);
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.82);
+  text-wrap: balance;
+}
+
+
+/* -- the form -------------------------------------------------------------- */
+
+.signup__form {
+  display: flex;
+  gap: 10px;
+  width: min(100%, 520px);
+  margin-top: 34px;
+}
+
+.signup__field {
+  flex: 1;
+  min-width: 0;
+  height: 56px;
+  padding: 0 20px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--r-pill);
+  background: rgba(18, 16, 34, 0.42);
+  backdrop-filter: blur(8px);
+  font-family: var(--mono);
+  font-size: 15px;
+  color: #fff;
+  transition: border-color var(--dur-fast) var(--ease-out),
+              background-color var(--dur-fast) var(--ease-out);
+}
+
+.signup__field::placeholder { color: rgba(255, 255, 255, 0.48); }
+
+.signup__field:focus {
+  outline: none;
+  border-color: #fff;
+  background: rgba(18, 16, 34, 0.58);
+}
+
+.signup__form.is-invalid .signup__field { border-color: #ffb4a0; }
+
+.signup__submit { flex: none; }
+
+/* Below the form: the error, or the confirmation that replaces it. */
+.signup__note {
+  margin-top: 16px;
+  min-height: 22px;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: #ffb4a0;
+}
+
+.signup__done {
+  display: none;
+  width: min(100%, 520px);
+  margin-top: 34px;
+  padding: 26px 28px;
+  border-radius: var(--r-tile);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(18, 16, 34, 0.42);
+  backdrop-filter: blur(8px);
+}
+
+.signup.is-done .signup__form,
+.signup.is-done .signup__note { display: none; }
+.signup.is-done .signup__done { display: block; }
+
+.signup__done-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.signup__done-copy {
+  margin-top: 8px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.signup__done-mail {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.14);
+  font-family: var(--mono);
+  font-size: 13px;
+  color: #fff;
+  word-break: break-all;
+}
+
+/* This line lands on the sky at some sizes and on the dark ridge at others,
+   so it carries its own shadow rather than relying on either ground. */
+.signup__fine {
+  margin-top: 26px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.78);
+  text-shadow: 0 1px 8px rgba(18, 16, 34, 0.55);
+}
+
+.signup__fine i { font-style: normal; padding-inline: 10px; color: rgba(255, 255, 255, 0.42); }
+
+@media (max-width: 640px) {
+  .signup__form { flex-direction: column; }
+
+  /* Stacked, the field must keep its own height — `flex: 1` in a column
+     gives it a 0 basis and it collapses to a sliver. */
+  .signup__field { flex: none; width: 100%; }
+
+  .signup__submit { width: 100%; justify-content: center; }
+  .signup__fine i { padding-inline: 6px; }
+
+  /* Narrower box, so let cover zoom into the ridge instead of stretching
+     the full 1440px plate into a thin strip that reads as empty sky. */
+  .signup__ridge {
+    width: 100vw;
+    margin-left: -50vw;
+    height: 36vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signup__home span { transition: none; }
+}

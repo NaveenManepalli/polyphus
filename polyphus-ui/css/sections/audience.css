@@ -1,0 +1,104 @@
+/* ==========================================================================
+   audience.css — "Made for two kinds of people."
+   Two alternating rows: text one side, a white rounded plate the other,
+   with the artwork oversized inside the plate and cropped by it.
+   ========================================================================== */
+
+/* The headline sits flush with the section top; each row carries its own
+   vertical padding, so the section itself adds none. */
+.audience-section { padding-block: 0; }
+
+.audience {
+  display: grid;
+  align-items: center;
+  gap: 48px;
+  padding-block: 91px;
+}
+
+/* Row one — solo founders: copy left (437), art right (437). */
+.audience--founders {
+  margin-top: 39px;
+  grid-template-columns: 437px 437px;
+  justify-content: center;
+  max-width: var(--w-inner);
+  margin-inline: auto;
+}
+
+/* Row two — businesses: art left (474), copy right (474). */
+.audience--businesses {
+  grid-template-columns: 474px 474px;
+  justify-content: center;
+  gap: 52px;
+  padding-top: 96px;
+  padding-bottom: 120px;
+  margin-top: 10px;
+  max-width: var(--w-main);
+  margin-inline: auto;
+}
+
+.audience__copy p {
+  margin-top: 16px;
+  font-size: var(--fs-lead);
+  font-weight: 400;
+  line-height: var(--lh-body);
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+
+.audience__features { margin-top: 40px; }
+
+/* The plate: a white rounded rectangle that CROPS its illustration.
+   The art is deliberately larger than the plate so the subject reads big,
+   but the plate must clip it — without `overflow: hidden` a 740px image
+   sits on top of the 437px copy column beside it. */
+.audience__plate {
+  position: relative;
+  height: 376px;
+  border-radius: var(--r-card);
+  background: var(--white);
+  overflow: hidden;
+}
+
+.audience__plate--tile { border-radius: var(--r-tile); }
+
+.audience__art {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 740px;
+  max-width: none;
+  height: auto;
+}
+
+/* The photo fills its plate edge to edge rather than being cropped in. */
+.audience__plate--tile .audience__art {
+  width: 100%;
+  height: 106%;
+  object-fit: cover;
+}
+
+@media (max-width: 1099px) {
+  .audience--founders,
+  .audience--businesses {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    padding-inline: var(--gutter);
+  }
+
+  .audience__art { width: 130%; }
+}
+
+@media (max-width: 809px) {
+  .audience--founders,
+  .audience--businesses {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding-block: 56px;
+  }
+
+  /* Art always follows the words on a phone. */
+  .audience--businesses .audience__plate { order: 2; }
+
+  .audience__plate { height: 300px; }
+  .audience__art   { width: 150%; }
+}

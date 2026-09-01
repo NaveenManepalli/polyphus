@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Polyphus — hire agents. run everything.</title>
+<meta name="description" content="Describe your company in a sentence. A crew of agents researches, designs, builds and ships it — then keeps running it, day and night.">
+
+<link rel="icon" href="assets/icons/favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Polyphus">
+<meta property="og:description" content="It's your time to hire super-intelligence.">
+
+<link rel="preload" as="image" href="assets/images/sky-layer-3-mid.png">
+<link rel="preload" as="image" href="assets/images/sky-layer-2-peak.png">
+
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mono.css">
+<link rel="stylesheet" href="css/lenis.css">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/sections/hero.css">
+<link rel="stylesheet" href="css/sections/steps.css">
+<link rel="stylesheet" href="css/sections/bento.css">
+<link rel="stylesheet" href="css/sections/showcase.css">
+<link rel="stylesheet" href="css/sections/crew.css">
+<link rel="stylesheet" href="css/sections/audience.css">
+<link rel="stylesheet" href="css/sections/roles.css">
+<link rel="stylesheet" href="css/sections/cta.css">
+<link rel="stylesheet" href="css/sections/footer.css">
+</head>
+
+<body>
+<div class="shell">
+
+<!-- ==========================================================================
+     HERO — parallax mountain scene
+     Paint order is deliberate: sky, glow, logotype, then the four cut-out
+     mountain plates ON TOP of the logotype, then the foreground copy.
+     ========================================================================== -->
+<header class="hero" data-parallax>
+
+  <!-- z 0 — sky plate and the bloom, both behind the logotype -->
+  <div class="hero__sky" aria-hidden="true"></div>
+  <div class="hero__glow" aria-hidden="true"></div>
+
+  <!-- z 1 — logotype, which the mountains will partly bury -->
+  <div class="hero__wordmark">
+    <p class="hero__welcome">Welcome to</p>
+    <p class="hero__logotype">polyphus<span class="cursor">_</span></p>
+  </div>
+
+  <!-- z 2 — the clipping stage and its plates -->
+  <div class="hero__stage" aria-hidden="true">
+    <div class="hero__layer hero__layer--far"  data-rate="0.40"><img src="assets/images/sky-layer-1-far.png"  alt="" width="1440" height="2572"></div>
+    <div class="hero__layer hero__layer--peak" data-rate="0.20"><img src="assets/images/sky-layer-2-peak.png" alt="" width="1440" height="2572"></div>
+    <div class="hero__layer hero__layer--mid"  data-rate="0"><img src="assets/images/sky-layer-3-mid.png"  alt="" width="1440" height="2572"></div>
+    <div class="hero__layer hero__layer--near" data-rate="-0.10"><img src="assets/images/sky-layer-4-near.png" alt="" width="1440" height="2572"></div>
+  </div>
+
+  <!-- z 3/4 — everything that stays above the landscape -->
+  <nav class="hero__nav" aria-label="Primary">
+    <a href="#top" aria-label="Polyphus home">
+      <img class="hero__logo" src="assets/icons/logo-mark.svg" alt="Polyphus" width="37" height="24">
+    </a>
+    <div class="hero__links">
+      <a href="#how">How it works</a>
+      <a href="#crew">The crew</a>
+      <a href="#who">Who it's for</a>
+      <a class="hero__start" href="start.html">Start</a>
+    </div>
+  </nav>
+
+  <p class="hero__tagline">It's your time to hire<br>super-intelligence.</p>
+
+  <div class="hero__strip">
+    <span class="hero__mark">Research</span>
+    <span class="hero__mark">Design</span>
+    <span class="hero__mark">Engineering</span>
+    <span class="hero__mark">Marketing</span>
+    <span class="hero__mark hero__mark--soon">Growth</span>
+    <span class="hero__mark hero__mark--soon">Support</span>
+  </div>
+
+  <div class="hero__lede" data-words>
+    <p>Describe your company in one sentence.<br>A crew of agents takes it from there.</p>
+    <p>They research, design, build and ship — then keep it running.</p>
+  </div>
+</header>
+
+
+<!-- ==========================================================================
+     HOW IT WORKS
+     ========================================================================== -->
+<section class="section steps" id="how">
+  <div class="container">
+
+    <div class="section-head steps__head">
+      <h2 class="display" data-words>Three steps. That's the whole thing.</h2>
+    </div>
+
+    <div class="steps__row">
+      <div class="step" data-reveal>
+        <div class="step__index">01</div>
+        <p class="step__title">Tell it what you want</p>
+        <p class="step__copy">Describe your company in a sentence &mdash; like texting a friend who happens to run a hundred businesses.</p>
+      </div>
+      <div class="step" data-reveal data-delay="0.1s">
+        <div class="step__index">02</div>
+        <p class="step__title">It gets to work</p>
+        <p class="step__copy">Agents research the market, design it, build it, and put it online. You watch it happen, live.</p>
+      </div>
+      <div class="step" data-reveal data-delay="0.2s">
+        <div class="step__index">03</div>
+        <p class="step__title">You stay in charge</p>
+        <p class="step__copy">Approve the big calls. Change your mind anytime. The agents handle the rest &mdash; day and night.</p>
+      </div>
+    </div>
+
+    <p class="steps__note" data-reveal>
+      You don't manage a team, a backlog or a stack.
+      <span class="em">You make the calls that matter.</span>
+    </p>
+
+    <div class="bento">
+      <div class="bento__row bento__row--a">
+
+        <!-- Tile 1 — the pipeline -->
+        <article class="card bento__tile" data-reveal>
+          <div class="card__body">
+            <h6 class="kicker">It's a crew</h6>
+            <h3 class="card__title">Work moves down the line, one agent to the <strong>next</strong>.</h3>
+          </div>
+          <p class="pipeline__flow" aria-hidden="true">brief &rarr;&rarr;&rarr; research &rarr;&rarr;&rarr; design &rarr;&rarr;&rarr; build &rarr;&rarr;&rarr; ship</p>
+          <div class="pipeline" aria-hidden="true">
+            <div class="pipeline__stage" data-state="done">
+              <div class="pipeline__role">Research</div>
+              <p class="pipeline__task">market<br>sized</p>
+              <div class="pipeline__state">done</div>
+            </div>
+            <div class="pipeline__stage" data-state="done">
+              <div class="pipeline__role">Design</div>
+              <p class="pipeline__task">brand<br>set</p>
+              <div class="pipeline__state">done</div>
+            </div>
+            <div class="pipeline__stage" data-state="run">
+              <div class="pipeline__role">Build</div>
+              <p class="pipeline__task">writing<br>the app</p>
+              <div class="pipeline__state">running</div>
+            </div>
+            <div class="pipeline__stage" data-state="wait">
+              <div class="pipeline__role">Ship</div>
+              <p class="pipeline__task">queued</p>
+              <div class="pipeline__state">queued</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Tile 2 — one sentence in -->
+        <article class="card bento__tile" data-reveal data-delay="0.1s">
+          <div class="card__body">
+            <h6 class="tile__headline">One sentence in.<br>A company out.</h6>
+          </div>
+          <img class="tile__art" src="assets/images/cloud-city.png" alt="" aria-hidden="true">
+        </article>
+      </div>
+
+      <div class="bento__row bento__row--b">
+
+        <!-- Tile 3 — always on -->
+        <article class="card bento__tile" data-reveal>
+          <div class="card__body">
+            <h6 class="kicker">Always on</h6>
+            <h3 class="card__title">They work while you sleep. You read it in the <strong>morning</strong>.</h3>
+          </div>
+          <div class="console tile__console" aria-hidden="true">
+            <div class="console__bar"><span class="status">running</span></div>
+            <div class="console__body">
+              <ul class="log">
+                <li data-state="done">market brief written</li>
+                <li data-state="done">brand palette locked</li>
+                <li data-state="run">building checkout flow</li>
+                <li data-state="wait">launch copy queued</li>
+                <li data-state="wait">support replies queued</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- Tile 4 — your call -->
+        <article class="card bento__tile" data-reveal data-delay="0.1s">
+          <div class="card__body tile__body--narrow">
+            <h6 class="kicker">Your call</h6>
+            <h3 class="card__title"><strong>You</strong> approve the decisions that actually matter.</h3>
+          </div>
+          <div class="approve" aria-hidden="true">
+            <span class="status status--idle">waiting on you</span>
+            <p class="approve__q">Spend &euro;400 on the launch campaign?</p>
+            <p class="approve__meta">from: marketing<br>budget left: &euro;1,200</p>
+            <div class="approve__actions">
+              <span class="approve__btn approve__btn--yes">Approve</span>
+              <span class="approve__btn approve__btn--no">Not yet</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ==========================================================================
+     SHOWCASE — video background + the hand-off console
+     ========================================================================== -->
+<section class="showcase">
+  <video class="showcase__video" src="assets/video/clouds-loop.mp4"
+         autoplay loop muted playsinline aria-hidden="true"></video>
+
+  <div class="showcase__inner">
+    <h6 class="kicker showcase__kicker">How work moves down the line</h6>
+
+    <h2 class="display showcase__title" data-words>You describe it once.<br>Then you watch it get made.</h2>
+
+    <p class="showcase__copy" data-reveal>
+      Every agent hands its work to the next one and tells you what it did.<br>
+      Nothing happens in a black box, and nothing big happens without you.
+    </p>
+
+    <a class="btn btn--dark showcase__cta" href="start.html">
+      See it work <img class="btn__icon" src="assets/icons/arrow-cream.svg" alt="">
+    </a>
+
+    <div class="console showcase__console" data-reveal>
+      <div class="console__bar">
+        <span>polyphus_ &mdash; build log</span>
+        <span class="status">running</span>
+      </div>
+      <div class="console__body">
+        <ul class="log">
+          <li data-state="done">research sized the market and picked a wedge</li>
+          <li data-state="done">design set the palette, type and logo</li>
+          <li data-state="run">engineering is writing the product</li>
+          <li data-state="wait">marketing waiting on the build</li>
+          <li data-state="wait">waiting on you: campaign budget</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="showcase__caption">an illustration of the hand-off &mdash; not a live feed</p>
+  </div>
+</section>
+
+
+<!-- ==========================================================================
+     THE CREW
+     ========================================================================== -->
+<section class="section crew-section" id="crew">
+  <div class="container">
+
+    <div class="section-head">
+      <h2 class="display" data-words>A crew, not a chatbot.</h2>
+      <p class="section-head__lede" data-reveal>
+        Four agents that each do one job properly,<br>and hand the work to the next one.
+      </p>
+    </div>
+
+    <div class="crew__grid">
+
+      <article class="crew crew--research" data-reveal>
+        <img class="crew__photo" src="assets/images/crew-research.jpg" alt="">
+        <div class="crew__tint"></div>
+        <div class="crew__head">
+          <span class="crew__icon"><img src="assets/icons/icon-research.svg" alt=""></span>
+          <div>
+            <p class="crew__name">Research</p>
+            <p class="crew__kind">Market &amp; competitors</p>
+          </div>
+        </div>
+        <p class="crew__note">Sizes the market, reads the competition, and picks the wedge worth attacking.</p>
+        <span class="tag tag--live crew__tag">Built</span>
+        <a class="btn btn--light crew__cta" href="start.html">
+          See it <img class="btn__icon" src="assets/icons/arrow-ink.svg" alt="">
+        </a>
+      </article>
+
+      <article class="crew crew--design" data-reveal data-delay="0.08s">
+        <img class="crew__photo" src="assets/images/crew-design.jpg" alt="">
+        <div class="crew__tint"></div>
+        <div class="crew__head">
+          <span class="crew__icon"><img src="assets/icons/icon-design.svg" alt=""></span>
+          <div>
+            <p class="crew__name">Design</p>
+            <p class="crew__kind">Brand &amp; interface</p>
+          </div>
+        </div>
+        <p class="crew__note">Names it, draws the mark, sets the palette and type, and lays out every screen.</p>
+        <span class="tag tag--live crew__tag">Built</span>
+        <a class="btn btn--light crew__cta" href="start.html">
+          See it <img class="btn__icon" src="assets/icons/arrow-ink.svg" alt="">
+        </a>
+      </article>
+
+      <article class="crew crew--engineering" data-reveal>
+        <img class="crew__photo" src="assets/images/crew-engineering.jpg" alt="">
+        <div class="crew__tint"></div>
+        <div class="crew__head">
+          <span class="crew__icon"><img src="assets/icons/icon-build.svg" alt=""></span>
+          <div>
+            <p class="crew__name">Engineering</p>
+            <p class="crew__kind">Product &amp; code</p>
+          </div>
+        </div>
+        <p class="crew__note">Writes the product, wires the data, and puts the whole thing together.</p>
+        <span class="tag tag--live crew__tag">Built</span>
+        <a class="btn btn--light crew__cta" href="start.html">
+          See it <img class="btn__icon" src="assets/icons/arrow-ink.svg" alt="">
+        </a>
+      </article>
+
+      <article class="crew crew--marketing" data-reveal data-delay="0.08s">
+        <img class="crew__photo" src="assets/images/crew-marketing.jpg" alt="">
+        <div class="crew__tint"></div>
+        <div class="crew__head">
+          <span class="crew__icon"><img src="assets/icons/icon-market.svg" alt=""></span>
+          <div>
+            <p class="crew__name">Marketing</p>
+            <p class="crew__kind">Launch &amp; copy</p>
+          </div>
+        </div>
+        <p class="crew__note">Writes the launch, picks the channels, and asks you before it spends anything.</p>
+        <span class="tag tag--live crew__tag">Built</span>
+        <a class="btn btn--light crew__cta" href="start.html">
+          See it <img class="btn__icon" src="assets/icons/arrow-ink.svg" alt="">
+        </a>
+      </article>
+
+    </div>
+
+    <p class="crew__footnote" data-reveal>growth and support agents are in build &mdash; not shipped yet</p>
+  </div>
+</section>
+
+
+<!-- ==========================================================================
+     WHO IT'S FOR
+     ========================================================================== -->
+<section class="section audience-section" id="who">
+  <div class="section-head">
+    <h2 class="display" data-words>Made for two kinds of people.</h2>
+    <p class="section-head__lede" data-reveal>
+      One has the idea and no time.<br>
+      The other has the time booked solid and a backlog that never moves.
+    </p>
+  </div>
+
+  <div class="audience audience--founders">
+    <div class="audience__copy" data-reveal>
+      <h6 class="kicker">Solo founders</h6>
+      <h5 class="h5">You have the idea. Not the time.</h5>
+      <p>You already know what you want to build. What you don't have is six months, a co-founder, and the money for either.</p>
+      <ul class="features">
+        <li class="feature">
+          <span class="feature__chip"><img src="assets/icons/icon-sentence.svg" alt=""></span>
+          <span class="feature__label">Start from one sentence, not a spec document</span>
+        </li>
+        <li class="feature">
+          <span class="feature__chip"><img src="assets/icons/icon-clock.svg" alt=""></span>
+          <span class="feature__label">The crew keeps working while you are at your day job</span>
+        </li>
+        <li class="feature">
+          <span class="feature__chip"><img src="assets/icons/icon-approve.svg" alt=""></span>
+          <span class="feature__label">You approve the big calls and nothing else lands on you</span>
+        </li>
+      </ul>
+    </div>
+    <div class="audience__plate" data-reveal data-delay="0.1s">
+      <img class="audience__art" src="assets/images/cloud-city.png" alt="" aria-hidden="true">
+    </div>
+  </div>
+
+  <div class="audience audience--businesses">
+    <div class="audience__plate audience__plate--tile" data-reveal>
+      <img class="audience__art" src="assets/images/valley-river.jpg" alt="" aria-hidden="true">
+    </div>
+    <div class="audience__copy" data-reveal data-delay="0.1s">
+      <h6 class="kicker">Businesses</h6>
+      <h5 class="h5">You have a backlog a mile long.</h5>
+      <p>The work is scoped and agreed. You just cannot hire fast enough to clear it, and every quarter the list gets longer.</p>
+      <ul class="features">
+        <li class="feature">
+          <span class="feature__chip"><img src="assets/icons/icon-build.svg" alt=""></span>
+          <span class="feature__label">Hand a whole project over, not a single ticket</span>
+        </li>
+        <li class="feature">
+          <span class="feature__chip"><img src="assets/icons/icon-growth.svg" alt=""></span>
+          <span class="feature__label">Add crews when the work grows, drop them when it doesn't</span>
+        </li>
+        <li class="feature">
+          <span class="feature__chip"><img src="assets/icons/icon-approve.svg" alt=""></span>
+          <span class="feature__label">Your team reviews the output instead of writing it</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==========================================================================
+     WHAT EACH AGENT DOES — the rail
+     ========================================================================== -->
+<section class="roles">
+  <div class="roles__inner">
+    <div class="roles__head">
+      <div>
+        <h2 class="h2 roles__title" data-reveal>What each agent actually does</h2>
+        <p class="roles__lede" data-reveal data-delay="0.08s">
+          Six roles. Four of them ship today.
+          The last two are in build and we will say so until they aren't.
+        </p>
+      </div>
+      <div class="roles__nav">
+        <button class="roles__btn" data-rail-prev aria-label="Previous roles">
+          <img src="assets/icons/carousel-prev.svg" alt="">
+        </button>
+        <button class="roles__btn" data-rail-next aria-label="Next roles">
+          <img src="assets/icons/carousel-next.svg" alt="">
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="roles__rail" data-rail>
+    <article class="role">
+      <span class="role__icon"><img src="assets/icons/icon-research.svg" alt=""></span>
+      <p class="role__name">Research</p>
+      <p class="role__what">Reads the market before anyone writes a line of code. Sizes it, names the competitors, and picks the opening worth taking.</p>
+      <div class="role__foot"><span class="tag tag--live">Built</span></div>
+    </article>
+
+    <article class="role">
+      <span class="role__icon"><img src="assets/icons/icon-design.svg" alt=""></span>
+      <p class="role__name">Design</p>
+      <p class="role__what">Turns the brief into a brand: a name, a mark, a palette, a typeface, and every screen the product needs.</p>
+      <div class="role__foot"><span class="tag tag--live">Built</span></div>
+    </article>
+
+    <article class="role">
+      <span class="role__icon"><img src="assets/icons/icon-build.svg" alt=""></span>
+      <p class="role__name">Engineering</p>
+      <p class="role__what">Writes the product. Takes the design and the research and turns them into something you can actually open.</p>
+      <div class="role__foot"><span class="tag tag--live">Built</span></div>
+    </article>
+
+    <article class="role">
+      <span class="role__icon"><img src="assets/icons/icon-market.svg" alt=""></span>
+      <p class="role__name">Marketing</p>
+      <p class="role__what">Writes the launch, picks the channels, drafts the copy, and comes back to you before it spends a euro.</p>
+      <div class="role__foot"><span class="tag tag--live">Built</span></div>
+    </article>
+
+    <article class="role">
+      <span class="role__icon"><img src="assets/icons/icon-growth.svg" alt=""></span>
+      <p class="role__name">Growth</p>
+      <p class="role__what">Will watch what people do with the product and change it &mdash; pricing, onboarding, the things that compound.</p>
+      <div class="role__foot"><span class="tag tag--soon">In build</span></div>
+    </article>
+
+    <article class="role">
+      <span class="role__icon"><img src="assets/icons/icon-support.svg" alt=""></span>
+      <p class="role__name">Support</p>
+      <p class="role__what">Will answer your customers day and night, and escalate to you the moment something needs a human.</p>
+      <div class="role__foot"><span class="tag tag--soon">In build</span></div>
+    </article>
+  </div>
+</section>
+
+
+<!-- ==========================================================================
+     FINAL CTA — sticky; the footer rides up over it
+     ========================================================================== -->
+<section class="cta-panel" id="start">
+  <img class="cta__cloud" src="assets/images/cloud-factory.png" alt="" aria-hidden="true">
+
+  <div class="section-head cta__head">
+    <h2 class="display" data-words>Start your company now.</h2>
+    <p class="cta__lede" data-reveal>It takes one sentence.</p>
+
+    <div class="cta__actions" data-reveal data-delay="0.1s">
+      <a class="btn btn--run" href="start.html">
+        Start your company <img class="btn__icon" src="assets/icons/arrow-cream.svg" alt="">
+      </a>
+    </div>
+
+    <p class="cta__fine" data-reveal data-delay="0.16s">
+      <span>free to start</span><i>//</i><span>no credit card</span><i>//</i><span>cancel anytime</span>
+    </p>
+  </div>
+</section>
+
+
+<!-- ==========================================================================
+     FOOTER
+     ========================================================================== -->
+<footer class="footer">
+  <img class="footer__scene" src="assets/images/footer-horizon.png" alt="" aria-hidden="true">
+
+  <div class="footer__inner">
+    <div>
+      <p class="footer__wordmark">polyphus<span class="cursor">_</span></p>
+      <p class="footer__tagline">hire agents. run everything.</p>
+    </div>
+
+    <div class="footer__cols">
+      <div>
+        <p class="footer__col-title">Product</p>
+        <div class="footer__links">
+          <a href="#how">How it works</a>
+          <a href="#crew">The crew</a>
+          <a href="start.html">Start</a>
+        </div>
+      </div>
+      <div>
+        <p class="footer__col-title">Company</p>
+        <div class="footer__links">
+          <a href="#who">Who it's for</a>
+          <a href="start.html">Join the waitlist</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="footer__legal">Copyright &copy; 2026 Polyphus</p>
+</footer>
+
+</div><!-- /.shell -->
+
+<script src="js/vendor/lenis.min.js"></script>
+<script src="js/modules/smooth-scroll.js"></script>
+<script src="js/modules/parallax.js"></script>
+<script src="js/modules/reveal.js"></script>
+<script src="js/modules/carousel.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

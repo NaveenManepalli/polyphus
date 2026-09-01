@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Polyphus — hire super-intelligence</title>
+  <meta name="description" content="It's your time to hire super-intelligence. Polyphus runs your company as a team of agents — research, design, engineering, marketing, growth, support — all working at once." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <pre class="ascii-bg" id="asciiBg" aria-hidden="true"></pre>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <div class="ticker" aria-hidden="true">
+    <span class="ticker__tag"><span class="pulse"></span>polyphus // live</span>
+    <span class="ticker__line">&gt; <span id="tickerText"></span><span class="ticker__caret"></span></span>
+    <span class="ticker__pct" id="tickerPct"></span>
+  </div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="#top">polyphus<b>_</b></a>
+    <nav class="nav__links">
+      <a href="#how">How it works</a>
+      <a href="#who">Who it's for</a>
+      <a href="start.html" class="btn btn--sm">Start</a>
+    </nav>
+    <span class="nav__progress" id="progress" aria-hidden="true"></span>
+  </header>
+
+  <main>
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="top">
+      <pre class="logo" id="logo" role="img" aria-label="Polyphus"> ____    ___   _     __   __ ____   _   _  _   _  ____
+|  _ \  / _ \ | |    \ \ / /|  _ \ | | | || | | |/ ___|
+| |_) || | | || |     \ V / | |_) || |_| || | | |\___ \
+|  __/ | |_| || |___   | |  |  __/ |  _  || |_| | ___) |
+|_|     \___/ |_____|  |_|  |_|    |_| |_| \___/ |____/ </pre>
+
+      <h1 class="hero__line" id="heroLine" data-text="It's your time to hire /super-intelligence/">&nbsp;</h1>
+
+      <div class="hero__cta">
+        <a href="#how" class="btn btn--lg">Get started</a>
+      </div>
+
+      <p class="hero__meta"><span class="blip"></span>polyphus is running <span class="count" data-to="10322" data-live>0</span> companies right now</p>
+
+      <a class="hero__scroll" href="#how" aria-label="Scroll down">▼ scroll</a>
+    </section>
+
+    <!-- ================= HOW IT WORKS ================= -->
+    <section class="section" id="how">
+      <div class="wrap">
+        <p class="kicker reveal">&gt; how it works<span class="kicker__cur"></span></p>
+        <h2 class="h2 reveal">Three steps. That's the whole thing.</h2>
+
+        <ol class="steps">
+          <li class="step reveal">
+            <span class="step__n">01</span>
+            <h3>Tell it what you want</h3>
+            <p>Describe your company in a sentence — like texting a friend who happens to run a hundred businesses.</p>
+          </li>
+          <li class="step reveal">
+            <span class="step__n">02</span>
+            <h3>It gets to work</h3>
+            <p>Agents research the market, design it, build it, and put it online. You watch it happen, live.</p>
+          </li>
+          <li class="step reveal">
+            <span class="step__n">03</span>
+            <h3>You stay in charge</h3>
+            <p>Approve the big calls. Change your mind anytime. The agents handle the rest — day and night.</p>
+          </li>
+        </ol>
+
+        <div class="scene-block reveal">
+          <div class="scene-scroll">
+            <pre class="scene" id="scene" aria-hidden="true"></pre>
+          </div>
+          <p class="scene__cap">live view // agents handing work down the line on a real customer build</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= WHO IT'S FOR ================= -->
+    <section class="section" id="who">
+      <div class="wrap">
+        <p class="kicker reveal">&gt; who it's for<span class="kicker__cur"></span></p>
+        <h2 class="h2 reveal">Made for two kinds of people.</h2>
+
+        <div class="who-grid">
+          <article class="who-card reveal">
+            <p class="who-card__tag">[ solo founders ]</p>
+            <h3>You have the idea. Not the time.</h3>
+            <p>Polyphus is the co-founder, the team, and the late nights. Keep your day job until the day you don't need it.</p>
+          </article>
+          <article class="who-card reveal">
+            <p class="who-card__tag">[ businesses ]</p>
+            <h3>You have a backlog a mile long.</h3>
+            <p>Onboard Polyphus like a new hire. It picks up the roles you can't fill fast enough — and never stops.</p>
+          </article>
+        </div>
+
+        <p class="kicker kicker--mid reveal">&gt; every role, working at once<span class="kicker__cur"></span></p>
+        <div class="agents" id="agents">
+          <article class="agent" data-name="RESEARCH" data-log="scanning 2,400 competitors|sizing the market|pulling pricing data|found 3 open gaps"></article>
+          <article class="agent" data-name="DESIGN" data-log="sketching the landing page|building the design system|exporting 42 components|dark-mode pass"></article>
+          <article class="agent" data-name="ENGINEERING" data-log="scaffolding the app|wiring the database|writing the test suite|deploying to prod"></article>
+          <article class="agent" data-name="MARKETING" data-log="drafting 14 ad variants|writing the launch email|scheduling 30 posts|A/B test is live"></article>
+          <article class="agent" data-name="GROWTH" data-log="setting up analytics|running experiment #7|shipping 120 SEO pages|conversion +12%"></article>
+          <article class="agent" data-name="SUPPORT" data-log="loading the help center|training on the docs|first ticket answered|0.8s median reply"></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= START ================= -->
+    <section class="section start" id="start">
+      <div class="wrap start__inner">
+        <p class="kicker reveal">&gt; ready<span class="kicker__cur"></span></p>
+        <h2 class="start__title reveal">Start your company now.</h2>
+        <p class="start__sub reveal">It takes one sentence.</p>
+        <a href="start.html" class="btn btn--lg reveal">Start your company</a>
+        <p class="start__note reveal">free to start // no credit card // cancel anytime</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot__grid">
+      <div>
+        <p class="foot__brand">polyphus_</p>
+        <p class="foot__tagline">hire agents. run everything.</p>
+      </div>
+      <nav class="foot__links">
+        <a href="#how">How it works</a>
+        <a href="#who">Who it's for</a>
+        <a href="start.html">Start</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </nav>
+    </div>
+    <div class="wrap foot__base">
+      <span>© <span id="year">2026</span> Polyphus</span>
+      <span>support@polyphus.com</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

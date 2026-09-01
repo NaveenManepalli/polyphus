@@ -1,0 +1,231 @@
+/* ==========================================================================
+   bento.css — the four deep-purple tiles.
+
+   1000px wide, two rows of 440px, 16px gutters, column widths mirrored
+   between the rows: 635 / 349 on top, 349 / 635 below.
+   Tile artwork deliberately overflows and is clipped by the tile.
+   ========================================================================== */
+
+.bento {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: var(--w-bento);
+  margin: 64px auto 0;
+}
+
+.bento__row { display: grid; gap: 16px; }
+
+.bento__row--a { grid-template-columns: 635fr 349fr; }
+.bento__row--b { grid-template-columns: 349fr 635fr; }
+
+.bento__tile { height: 440px; }
+
+
+/* -- tile 1: the crew pipeline --------------------------------------------
+   Four stages, left to right, with the work handed down the line. Every
+   glyph is one cell wide so the arrows line up with the boxes.
+   ------------------------------------------------------------------------- */
+
+.pipeline {
+  position: absolute;
+  top: 202px;
+  bottom: 32px;
+  left: 32px;
+  right: 32px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: stretch;
+  gap: 10px;
+}
+
+.pipeline__stage {
+  display: flex;
+  flex-direction: column;
+  padding: 14px 12px;
+  border-radius: var(--r-well);
+  background: var(--card-2);
+  border: 1px solid rgba(233, 229, 216, 0.08);
+}
+
+/* Only the stage that is actually working wears the accent. */
+.pipeline__stage[data-state="run"] {
+  border-color: rgba(245, 67, 31, 0.45);
+  background: rgba(245, 67, 31, 0.07);
+}
+
+.pipeline__role {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  color: #8b8578;
+}
+
+.pipeline__stage[data-state="run"] .pipeline__role { color: var(--orange); }
+
+.pipeline__task {
+  margin-top: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.5;
+  color: #6f6a5e;
+}
+
+/* Pinned to the foot of the box so the four stages read as a status board. */
+.pipeline__state {
+  margin-top: auto;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8b8578;   /* was #4a463d — 1.68:1 on --card */
+}
+
+.pipeline__stage[data-state="run"] .pipeline__state { color: var(--orange); }
+
+.pipeline__flow {
+  position: absolute;
+  top: 172px;
+  left: 32px;
+  right: 32px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  color: #8b8578;   /* 4.32:1 on --card; #4a463d was 1.68:1 and invisible */
+}
+
+
+/* -- tile 2: "One sentence in. A company out." ---------------------------- */
+
+.tile__headline {
+  font-family: var(--font-display);
+  font-size: clamp(25px, 2.08vw, 30px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--pink);
+}
+
+.tile__art {
+  position: absolute;
+  top: 148px;
+  left: 32px;
+  width: 285px;
+  height: 258px;
+  object-fit: cover;
+  border-radius: var(--r-well);
+}
+
+
+/* -- tile 3: the always-on log -------------------------------------------- */
+
+.tile__console {
+  position: absolute;
+  top: 228px;
+  left: 32px;
+  right: 32px;
+  bottom: -1px;   /* runs off the bottom edge, clipped by the tile */
+}
+
+
+/* -- tile 4: the approval card -------------------------------------------- */
+
+.tile__body--narrow { max-width: 329px; }  /* 265px of text + 2 × 32px padding */
+
+.approve {
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  width: 268px;
+  padding: 18px;
+  border-radius: var(--r-well);
+  background: var(--card-2);
+  border: 1px solid rgba(233, 229, 216, 0.10);
+}
+
+/* The status sits on a dark well, so it needs its own ink. */
+.approve .status { color: #8b8578; }
+
+.approve__q {
+  margin-top: 12px;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--off-white);
+}
+
+.approve__meta {
+  margin-top: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.7;
+  color: #6f6a5e;
+}
+
+.approve__actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.approve__btn {
+  flex: 1;
+  padding: 9px 0;
+  border-radius: 8px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+}
+
+.approve__btn--yes { background: var(--orange); color: var(--cream); }
+.approve__btn--no  { background: rgba(233, 229, 216, 0.10); color: #8b8578; }
+
+
+@media (max-width: 1099px) {
+  .bento__row--a,
+  .bento__row--b { grid-template-columns: 1fr 1fr; }
+
+  /* The tiles halve HERE, not at 809 — this band is the narrowest they ever
+     get (480px at 1099, 352px at 810). The approval card was placed against
+     a 635px tile, so it has to leave the absolute layer now or it lands on
+     the headline: two blocks of light text in the same pixels, neither with
+     a background to hide behind. */
+  .approve {
+    position: relative;
+    top: 0;
+    right: 0;
+    width: auto;
+    margin: 20px 32px 0;
+  }
+
+  .tile__body--narrow { max-width: none; }
+}
+
+@media (max-width: 809px) {
+  .bento { margin-top: 64px; }
+
+  .bento__row--a,
+  .bento__row--b { grid-template-columns: 1fr; }
+
+  .bento__tile { height: 420px; }
+
+  /* Four horizontal stages at phone width are illegible — go vertical. */
+  .pipeline {
+    top: 210px;
+    bottom: 24px;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .pipeline__flow  { display: none; }
+  .tile__art       { top: 168px; left: 50%; transform: translateX(-50%); width: calc(100% - 64px); }
+  .tile__console   { top: 250px; }
+  .approve         { position: relative; top: 0; right: 0; width: auto; margin: 0 32px; }
+  .tile__body--narrow { max-width: none; }
+}

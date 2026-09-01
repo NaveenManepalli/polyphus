@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Polyphus — coming soon</title>
+<meta name="description" content="Polyphus isn't open yet. Leave your email and we'll tell you the moment the crew can take your sentence.">
+<meta name="robots" content="noindex">
+
+<link rel="icon" href="assets/icons/favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Polyphus — coming soon">
+<meta property="og:description" content="Be first in the queue.">
+
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mono.css">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/sections/signup.css">
+</head>
+
+<body>
+
+<main class="signup">
+
+  <div class="signup__glow" aria-hidden="true"></div>
+  <img class="signup__ridge" src="assets/images/sky-layer-4-near.png" alt="" aria-hidden="true">
+
+  <header class="signup__top">
+    <a class="signup__home" href="index.html"><span>&larr;</span> back to polyphus_</a>
+    <img class="hero__logo" src="assets/icons/logo-mark.svg" alt="Polyphus" width="37" height="24">
+  </header>
+
+  <div class="signup__main">
+
+    <p class="signup__logotype">polyphus<span class="cursor">_</span></p>
+
+    <h6 class="kicker signup__kicker">Coming soon</h6>
+
+    <h1 class="signup__title">Be first in the queue.</h1>
+
+    <p class="signup__lede">
+      The crew isn&rsquo;t taking work yet. Leave your email and we&rsquo;ll tell
+      you the moment Polyphus can take your sentence &mdash; nothing else.
+    </p>
+
+    <!-- Set data-endpoint before this page goes live. With it empty the
+         address is stored in this browser only and is emailed to nobody.
+         See js/modules/signup.js. -->
+    <form class="signup__form" data-signup data-endpoint="" novalidate>
+      <label class="visually-hidden" for="signup-email">Your email address</label>
+      <input class="signup__field"
+             id="signup-email"
+             type="email"
+             name="email"
+             inputmode="email"
+             autocomplete="email"
+             placeholder="you@company.com"
+             required>
+      <button class="btn btn--run signup__submit" type="submit">
+        Notify me <img class="btn__icon" src="assets/icons/arrow-cream.svg" alt="">
+      </button>
+    </form>
+
+    <p class="signup__note" data-signup-note role="alert"></p>
+
+    <div class="signup__done" role="status" aria-live="polite">
+      <p class="signup__done-title" tabindex="-1">You&rsquo;re on the list.</p>
+      <p class="signup__done-copy">
+        We&rsquo;ll email you once &mdash; when Polyphus opens. No newsletter,
+        no drip, nothing else.
+      </p>
+      <span class="signup__done-mail" data-signup-mail></span>
+    </div>
+
+    <p class="signup__fine">
+      <span>free to start</span><i>//</i><span>no credit card</span><i>//</i><span>cancel anytime</span>
+    </p>
+
+  </div>
+</main>
+
+<script src="js/modules/signup.js"></script>
+</body>
+</html>

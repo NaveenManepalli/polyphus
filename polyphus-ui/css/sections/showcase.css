@@ -1,0 +1,91 @@
+/* ==========================================================================
+   showcase.css — full-bleed cloud video, centred copy, and the console
+   that shows how work moves down the line.
+   The background is a looping muted mp4, not a still.
+   ========================================================================== */
+
+.showcase {
+  position: relative;
+  min-height: 1139px;
+  padding-top: 160px;
+  padding-bottom: 96px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.showcase__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.showcase__inner {
+  position: relative;
+  /* 1120px of content, plus the gutter outside it — not inside, or the
+     headline loses a line's worth of width and wraps to three. */
+  max-width: calc(var(--w-inner) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  text-align: center;
+}
+
+.showcase__kicker { color: var(--ink); opacity: 0.72; }
+
+.showcase__title {
+  margin-top: 24px;
+  text-wrap: balance;
+}
+
+.showcase__copy {
+  max-width: 910px;
+  margin: 22px auto 0;
+  font-size: var(--fs-lead);
+  font-weight: 500;
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-tight);
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.showcase__cta { margin-top: 41px; }
+
+
+/* --------------------------------------------------------------------------
+   The console. A scripted illustration of the hand-off between agents —
+   it is not a live feed and the caption underneath says so.
+   -------------------------------------------------------------------------- */
+
+.showcase__console {
+  width: min(740px, 100%);
+  margin: 84px auto 0;
+  text-align: left;
+  box-shadow: 0 30px 80px rgba(39, 28, 64, 0.28);
+}
+
+.showcase__console .console__bar { justify-content: space-between; }
+
+.showcase__console .console__body { padding: 18px 20px; }
+
+.showcase__console .log li { line-height: 2.1; }
+
+.showcase__caption {
+  margin-top: 18px;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  /* This line is the honesty disclaimer on a scripted console. It has to be
+     readable over the video, so it does not get to be a whisper. */
+  opacity: 0.82;
+}
+
+@media (max-width: 809px) {
+  .showcase { min-height: 0; padding-top: 88px; padding-bottom: 88px; }
+  .showcase__title { margin-top: 16px; }
+  .showcase__copy  { margin-top: 20px; }
+  .showcase__console { margin-top: 56px; }
+  .showcase__console .log li { white-space: normal; }
+}

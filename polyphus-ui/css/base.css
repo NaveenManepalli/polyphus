@@ -1,0 +1,119 @@
+/* ==========================================================================
+   base.css — reset, document defaults, shared type primitives.
+   ========================================================================== */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: auto;          /* Lenis owns scrolling; see js/modules/smooth-scroll.js */
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, p, figure, blockquote { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+img, svg, video { display: block; max-width: 100%; }
+img { border: 0; }
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--pink);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+
+/* --------------------------------------------------------------------------
+   Type primitives — the five registers the page actually uses.
+   -------------------------------------------------------------------------- */
+
+.display {
+  font-family: var(--font-display);
+  font-size: var(--fs-display);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-display);
+  color: var(--ink);
+}
+
+.h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 600;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-h2);
+  color: var(--ink);
+}
+
+.h5 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h5);
+  font-weight: 600;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-h5);
+  color: var(--ink);
+}
+
+/* Every label, kicker and status: monospace, uppercase, widely tracked.
+   Headlines and body stay in DM Sans — that split is how the eye separates
+   chrome from content. Keep them apart. */
+.kicker {
+  font-family: var(--mono);
+  font-size: var(--fs-kicker);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* Lavender only where the ground is dark — on cream it is unreadable. */
+.card .kicker,
+.role .kicker { color: var(--lavender); }
+
+.lead {
+  font-size: var(--fs-lead);
+  font-weight: 400;
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-tight);
+  color: var(--ink-soft);
+}
+
+/* Bold run inside an otherwise regular sentence — "The traction follows." */
+.em { font-weight: 700; }

@@ -1,0 +1,19 @@
+# Study copy of wishlabs.ai — kept locally as the measured reference for
+# polyphus-ui/, never committed. It is ~35 MB and the layout, copy,
+# photography, app screenshots, staff portraits and brand marks in it belong
+# to Wishlabs and Codeway. polyphus-ui/ deliberately carries none of that
+# across, so nothing in the repo depends on this folder being present.
+wishlabs-clone/
+
+# Local-only Claude Code settings (settings.json itself is shared)
+.claude/settings.local.json
+
+# OS noise
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp

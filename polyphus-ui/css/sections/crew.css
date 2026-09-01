@@ -1,0 +1,132 @@
+/* ==========================================================================
+   crew.css — the four agent cards.
+   340 × 460 each, 20px column gap, 38px row gap, 700px overall.
+   One photo per card with three things floated on top: a centred
+   icon + role header, a status tag, and a link pill.
+   ========================================================================== */
+
+.crew-section { padding-top: 114px; padding-bottom: 142px; }
+
+.crew__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 340px);
+  justify-content: center;
+  gap: 38px 20px;
+  margin-top: 71px;
+}
+
+.crew {
+  position: relative;
+  width: 340px;
+  height: 460px;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.crew:hover { transform: translateY(-6px); }
+
+.crew__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Bottom tint so the footer of the card stays legible. Each role
+   carries its own via --tint. */
+.crew__tint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 243px;
+  background: var(--tint);
+}
+
+.crew--research    { --tint: linear-gradient(rgba(255, 252, 252, 0) 0%, rgba(39, 28, 64, 0.82) 96.85%); }
+.crew--design      { --tint: linear-gradient(rgba(115, 115, 255, 0) 0%, rgb(46, 51, 130) 96.85%); }
+.crew--engineering { --tint: linear-gradient(rgba(255, 252, 252, 0) 0%, rgba(39, 28, 64, 0.86) 96.85%); }
+.crew--marketing   { --tint: linear-gradient(rgba(255, 252, 252, 0) 0%, rgba(74, 58, 130, 0.9) 96.85%); }
+
+.crew__head {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.crew__icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  flex: none;
+  border-radius: var(--r-icon);
+  background: rgba(250, 247, 240, 0.92);
+}
+
+.crew__icon img { width: 24px; height: 24px; }
+
+.crew__name {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  line-height: 1.2;
+  color: #fff;
+}
+
+.crew__kind {
+  margin-top: 5px;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.crew__note {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 92px;
+  z-index: 2;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--cream);
+}
+
+.crew__tag { position: absolute; left: 24px; bottom: 34px; z-index: 2; }
+
+.crew__cta { position: absolute; right: 22px; bottom: 34px; z-index: 2; }
+
+/* The honesty line under the grid: two of the six roles are not built. */
+.crew__footnote {
+  max-width: var(--w-cards);
+  margin: 40px auto 0;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 809px) {
+  .crew-section { padding-top: 72px; padding-bottom: 72px; }
+
+  .crew__grid {
+    grid-template-columns: min(340px, 100%);
+    gap: 24px;
+    margin-top: 64px;
+  }
+
+  .crew { width: 100%; }
+}

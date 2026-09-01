@@ -1,0 +1,45 @@
+/* ==========================================================================
+   layout.css — containers and section rhythm.
+   The source page is composed on a 1440px canvas with a handful of fixed
+   content widths. They are reproduced here as max-widths so the page holds
+   its proportions at 1440 and degrades sensibly below it.
+   ========================================================================== */
+
+.shell {
+  position: relative;
+  width: 100%;
+  overflow-x: clip;
+}
+
+/* Centred containers, widest to narrowest. */
+.container      { width: 100%; max-width: var(--w-main);    margin-inline: auto; padding-inline: var(--gutter); }
+.container--wide{ max-width: var(--w-wide); }
+.container--inner{ max-width: var(--w-inner); }
+.container--text { max-width: var(--w-text); }
+
+/* A centred display heading + optional lede, the page's most repeated unit. */
+.section-head {
+  max-width: var(--w-heading);
+  margin-inline: auto;
+  text-align: center;
+}
+
+.section-head__lede {
+  margin-top: 20px;
+  font-size: var(--fs-lead);
+  font-weight: 400;
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-tight);
+  color: var(--ink-soft);
+  text-wrap: balance;
+}
+
+/* Vertical rhythm between the cream sections. */
+.section { position: relative; }
+.section--pad     { padding-block: clamp(72px, 7.8vw, 114px); }
+.section--pad-lg  { padding-block: clamp(90px, 9.7vw, 140px); }
+
+@media (max-width: 809px) {
+  .section--pad    { padding-block: 64px; }
+  .section--pad-lg { padding-block: 72px; }
+}

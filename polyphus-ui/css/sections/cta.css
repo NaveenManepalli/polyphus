@@ -1,0 +1,86 @@
+/* ==========================================================================
+   cta.css — "Start your company now."
+
+   This panel is `position: sticky`. It pins to the top of the viewport and
+   the footer, which follows it in the flow, rides up over it. That handover
+   is the last piece of choreography on the page — remove the sticky and the
+   footer reveal goes with it.
+   ========================================================================== */
+
+.cta-panel {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  /* Taller than the viewport on purpose. While the panel is pinned the footer
+     climbs over it, so the panel's height is how much scrolling the call to
+     action survives before the footer swallows it. At 900px it was only
+     visible for ~300px of scroll. */
+  min-height: 1040px;
+  padding-top: 376px;
+  border-radius: var(--r-panel) var(--r-panel) 0 0;
+  background: var(--cream-2);
+}
+
+/* The factory-on-a-cloud crosses the panel's rounded top edge. */
+.cta__cloud {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 792px;
+  max-width: 92%;
+  height: auto;
+  pointer-events: none;
+}
+
+.cta__head { position: relative; }
+
+.cta__lede {
+  max-width: 612px;
+  margin: 22px auto 0;
+  text-align: center;
+  font-size: var(--fs-lead);
+  font-weight: 400;
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-tight);
+  color: var(--ink-soft);
+  text-wrap: balance;
+}
+
+.cta__actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 44px;
+}
+
+/* free to start // no credit card // cancel anytime */
+.cta__fine {
+  margin-top: 24px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+
+.cta__fine span { white-space: nowrap; }
+
+.cta__fine i {
+  font-style: normal;
+  padding-inline: 10px;
+  color: var(--sand);
+}
+
+@media (max-width: 809px) {
+  /* Pinning a 1000px panel on a phone just traps the reader — release it. */
+  .cta-panel {
+    position: relative;
+    min-height: 0;
+    padding-top: 200px;
+    padding-bottom: 90px;
+  }
+
+  .cta__cloud { top: -10px; width: 420px; }
+  .cta__actions { margin-top: 36px; }
+  .cta__fine i { padding-inline: 6px; }
+}

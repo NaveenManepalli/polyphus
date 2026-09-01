@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Start your company — Polyphus</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <pre class="ascii-bg" id="asciiBg" aria-hidden="true"></pre>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <div class="ticker" aria-hidden="true">
+    <span class="ticker__tag"><span class="pulse"></span>polyphus // live</span>
+    <span class="ticker__line">&gt; <span id="tickerText"></span><span class="ticker__caret"></span></span>
+  </div>
+
+  <!-- ===== intro ===== -->
+  <section class="intro" id="intro">
+    <p class="kicker">&gt; new company<span class="kicker__cur"></span></p>
+    <h1 class="intro__title">This is where it begins.</h1>
+    <pre class="intro__term" id="introTerm" aria-hidden="true"></pre>
+  </section>
+
+  <!-- ===== workspace ===== -->
+  <div class="ws" id="workspace" hidden>
+    <aside class="ws__side" id="wsSide">
+      <div class="ws__brand"><a href="index.html">polyphus<b>_</b></a></div>
+      <button class="ws__new" id="wsNew">+ new company</button>
+      <p class="ws__label">Projects</p>
+      <ul class="ws__projects" id="wsProjects"></ul>
+      <div class="ws__account">
+        <span class="ws__avatar">S</span>
+        <span>shariff <em>· founder</em></span>
+      </div>
+    </aside>
+
+    <main class="ws__main" id="wsMain">
+      <button class="ws__menu" id="wsMenu" aria-label="Projects">☰</button>
+
+      <!-- empty state -->
+      <section class="stage stage--empty" id="stageEmpty">
+        <div class="empty">
+          <p class="empty__prompt">&gt; describe the company you wish existed</p>
+          <form class="composer composer--hero" id="composerHero">
+            <textarea class="composer__input" id="promptHero" rows="1" placeholder="describe a company…" autocomplete="off"></textarea>
+            <button class="composer__send" type="submit" aria-label="Build">▶</button>
+          </form>
+          <div class="chips">
+            <button class="chip">a scam detector for any link, message or seller</button>
+            <button class="chip">a CRM built for freelance photographers</button>
+            <button class="chip">same-day plant delivery for small offices</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- build + result -->
+      <section class="stage stage--run" id="stageRun" hidden>
+        <div class="run" id="run"></div>
+      </section>
+
+      <!-- docked composer -->
+      <form class="composer composer--dock" id="composerDock" hidden>
+        <textarea class="composer__input" id="promptDock" rows="1" placeholder="describe another company…" autocomplete="off"></textarea>
+        <button class="composer__send" type="submit" aria-label="Build">▶</button>
+      </form>
+    </main>
+
+    <!-- marketing report panel -->
+    <div class="report" id="report" hidden>
+      <div class="report__scrim" id="reportScrim"></div>
+      <aside class="report__panel" id="reportPanel">
+        <button class="report__close" id="reportClose" aria-label="Close">✕</button>
+        <div class="report__body" id="reportBody"></div>
+      </aside>
+    </div>
+
+    <!-- execute overlay -->
+    <div class="exec" id="exec" hidden>
+      <div class="exec__box" id="execBox"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="workspace.js"></script>
+</body>
+</html>

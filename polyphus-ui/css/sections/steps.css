@@ -1,0 +1,93 @@
+/* ==========================================================================
+   steps.css — "Three steps. That's the whole thing."
+   The three-up row that carries 01 / 02 / 03.
+   ========================================================================== */
+
+.steps { padding-top: 80px; padding-bottom: 78px; }
+
+.steps__head { max-width: var(--w-stats); }
+
+.steps__row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  max-width: var(--w-stats);
+  margin: 80px auto 0;
+}
+
+.step {
+  position: relative;
+  padding-left: 20px;
+}
+
+/* A 2px lavender rule divides the columns — but never before the first. */
+.step + .step::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 2px;
+  background: var(--lavender);
+}
+
+.step__index {
+  font-family: var(--mono);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.step__title {
+  margin-top: 18px;
+  font-family: var(--font-display);
+  font-size: var(--fs-quote);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--ink);
+}
+
+.step__copy {
+  margin-top: 10px;
+  font-size: var(--fs-ui);
+  font-weight: 400;
+  line-height: var(--lh-ui);
+  letter-spacing: -0.01em;
+  color: var(--ink-soft);
+}
+
+/* The thesis line under the steps. */
+.steps__note {
+  max-width: 900px;
+  margin: 140px auto 0;
+  text-align: center;
+  font-size: var(--fs-tagline);
+  font-weight: 500;
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-tight);
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+@media (max-width: 809px) {
+  .steps__row {
+    grid-template-columns: 1fr;
+    gap: 44px;
+    margin-top: 56px;
+  }
+
+  .step { padding-left: 0; }
+
+  .step + .step::before {
+    inset-block: auto;
+    top: -22px;
+    left: 0;
+    width: 64px;
+    height: 2px;
+  }
+
+  .steps__note { margin-top: 64px; }
+}

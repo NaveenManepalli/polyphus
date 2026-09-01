@@ -23,7 +23,9 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: clamp(14px, 1.8vw, 26px);
+  --river-gap: clamp(14px, 1.8vw, 26px);
+
+  gap: var(--river-gap);
   padding-block: clamp(76px, 8vw, 118px);
 
   /* Clip the tracks, which are far wider than the viewport, and dissolve
@@ -35,7 +37,7 @@
 
 .river__track {
   display: flex;
-  gap: clamp(14px, 1.8vw, 26px);
+  gap: var(--river-gap);
   width: max-content;
   will-change: transform;
   transform: translateZ(0);      /* own layer — keeps the drift off the main thread */
@@ -45,13 +47,18 @@
 .river__track--a { animation: river-right 68s linear infinite; }
 .river__track--b { animation: river-left  92s linear infinite; }
 
+/* The travel distance is one copy's PITCH, not half the track.
+   A copy is N images and N gaps; half the track is N images and N-0.5 gaps,
+   because the track has 2N-1 gaps, not 2N. Animating to a flat -50% is
+   therefore half a gap short and the row jumps ~13px every cycle. Adding
+   half a gap closes it exactly. */
 @keyframes river-left {
   from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(-50%, 0, 0); }
+  to   { transform: translate3d(calc(-50% - var(--river-gap) / 2), 0, 0); }
 }
 
 @keyframes river-right {
-  from { transform: translate3d(-50%, 0, 0); }
+  from { transform: translate3d(calc(-50% - var(--river-gap) / 2), 0, 0); }
   to   { transform: translate3d(0, 0, 0); }
 }
 

@@ -38,7 +38,8 @@ keep them apart. Log lines are lowercase with a `>` prefix and no full stop.
 | Showcase | `sections/showcase.css` | cloud video + the hand-off console |
 | The crew | `sections/crew.css` | four agent cards |
 | Who it's for | `sections/audience.css` | solo founders / businesses |
-| What each agent does | `sections/roles.css` | six-card rail |
+| Meet our team | `sections/team.css` | three founder cards + prior-company marks |
+| The river | `sections/gallery.css` | two auto-drifting photo rows, grey until hovered |
 | Final CTA | `sections/cta.css` | *Start your company now.* (sticky) |
 | Footer | `sections/footer.css` | *hire agents. run everything.* |
 | Waitlist | `sections/signup.css` | `start.html` — coming soon + email capture |
@@ -121,6 +122,8 @@ content-hash filenames.
 | `cloud-city.png`, `valley-river.jpg`, `cloud-factory.png`, `footer-horizon.png` | scenery, carried over |
 | `crew-research.jpg`, `crew-design.jpg`, `crew-engineering.jpg`, `crew-marketing.jpg` | 680 × 920 crops cut from the scenery above |
 | `icons/*.svg` | **drawn for Polyphus** — mark, arrows, chevrons, nine line icons, favicon |
+| `team/*` | founder portraits and prior-company marks, supplied by the team |
+| `bottom/*.jpeg` | the river photographs — **placeholder**, not Polyphus's own |
 | `fonts/` | DM Sans, Inter, Satoshi, Lato, JetBrains Mono — all self-hosted |
 
 No product screenshots, brand marks, staff photographs or third-party logotypes

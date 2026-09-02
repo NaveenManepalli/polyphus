@@ -1,0 +1,118 @@
+/* ==========================================================================
+   team.css — "Meet our team."
+
+   Three white cards on the cream ground: portrait, name, what they did
+   before, and the marks of the places they did it. No job titles — the
+   background is the point, not the org chart.
+
+   The portraits arrive as cut-outs on the brand orange. That is a lot of
+   accent for a palette where orange is supposed to mean "running", so they
+   are kept small: a 108px square each, not a full-bleed card header.
+   ========================================================================== */
+
+.team {
+  padding-top: clamp(80px, 8.3vw, 120px);
+}
+
+.team__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: var(--w-inner);
+  margin: clamp(48px, 5vw, 72px) auto 0;
+  padding-inline: var(--gutter);
+}
+
+.member {
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+  border-radius: var(--r-card);
+  background: var(--white);
+  transition: transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.member:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 34px rgba(39, 28, 64, 0.08);
+}
+
+.member__portrait {
+  width: 108px;
+  height: 108px;
+  border-radius: 18px;
+  object-fit: cover;
+  object-position: 50% 12%;   /* faces sit high in these frames */
+}
+
+.member__name {
+  margin-top: 22px;
+  font-family: var(--font-display);
+  font-size: clamp(20px, 1.6vw, 23px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.member__bio {
+  margin-top: 12px;
+  font-size: var(--fs-ui);
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  color: var(--ink-soft);
+}
+
+.member__bio p + p { margin-top: 4px; }
+
+/* Pushed to the foot so the marks line up across all three cards however
+   long the bio runs. */
+.member__marks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 26px;
+}
+
+.member__mark {
+  display: inline-flex;
+  align-items: center;
+}
+
+.member__mark img {
+  height: 100%;
+  width: auto;
+  display: block;
+}
+
+/* Two different kinds of lockup, so two different sizes.
+
+   The company marks are wide horizontal lockups on their own dark ground —
+   34px of height is plenty and any more would make them shout.
+
+   The institution marks are STACKED (crest over wordmark), so height-matching
+   them to the wide ones squeezes the wordmark down to a few unreadable
+   pixels. They get the height they need to stay legible instead. */
+.member__mark--dark  { height: 34px; }
+.member__mark--dark img { border-radius: 8px; }
+
+.member__mark--light { height: 52px; }
+
+@media (max-width: 1099px) {
+  .team__grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Three into two leaves an orphan — let the last one span so the row
+     does not end with a half-empty gap. */
+  .member:last-child { grid-column: 1 / -1; }
+  .member:last-child .member__bio { max-width: 46ch; }
+}
+
+@media (max-width: 809px) {
+  .team { padding-top: 64px; }
+  .team__grid { grid-template-columns: 1fr; gap: 16px; }
+  .member { padding: 24px; }
+  .member:last-child { grid-column: auto; }
+}

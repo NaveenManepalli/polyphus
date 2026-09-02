@@ -45,7 +45,11 @@
   color: var(--ink);
 }
 
-.audience__features { margin-top: 40px; }
+/* The class was missing from the markup, so this never applied and the list
+   sat flush against the paragraph. */
+.audience__features { margin-top: 34px; }
+
+.audience__features .feature + .feature { margin-top: 4px; }
 
 /* The plate: a white rounded rectangle that CROPS its illustration.
    The art is deliberately larger than the plate so the subject reads big,

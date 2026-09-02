@@ -13,7 +13,7 @@
   function boot() {
     // Start whatever this page actually loaded — a page without a rail
     // simply doesn't ship carousel.js.
-    ['initSmoothScroll', 'initParallax', 'initReveal', 'initCarousel']
+    ['initSmoothScroll', 'initParallax', 'initReveal', 'initRig']
       .forEach(function (fn) { if (typeof WL[fn] === 'function') WL[fn](); });
 
     document.documentElement.classList.add('is-ready');

@@ -22,78 +22,189 @@
 .bento__tile { height: 440px; }
 
 
-/* -- tile 1: the crew pipeline --------------------------------------------
-   Four stages, left to right, with the work handed down the line. Every
-   glyph is one cell wide so the arrows line up with the boxes.
+/* -- tile 1: the rig ------------------------------------------------------
+   A terminal read-out of the hand-off. Four stages on one grid so the meter
+   ids, the bus ticks and the boxes all line up in the same columns — that
+   alignment is the whole point of setting it in monospace.
+
+   Only the BUILD bar moves (js/modules/rig.js). Orange marks the stage that
+   is actually running and nothing else.
    ------------------------------------------------------------------------- */
 
-.pipeline {
+.rig {
   position: absolute;
-  top: 202px;
-  bottom: 32px;
+  top: 148px;
+  bottom: 28px;
   left: 32px;
   right: 32px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  align-items: stretch;
-  gap: 10px;
-}
-
-.pipeline__stage {
+  /* The read-out is a fixed height; centre it in whatever the title leaves
+     rather than letting it hang off the top of the space. */
   display: flex;
   flex-direction: column;
-  padding: 14px 12px;
-  border-radius: var(--r-well);
-  background: var(--card-2);
-  border: 1px solid rgba(233, 229, 216, 0.08);
-}
-
-/* Only the stage that is actually working wears the accent. */
-.pipeline__stage[data-state="run"] {
-  border-color: rgba(245, 67, 31, 0.45);
-  background: rgba(245, 67, 31, 0.07);
-}
-
-.pipeline__role {
+  justify-content: center;
   font-family: var(--mono);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: var(--ls-kicker);
-  text-transform: uppercase;
   color: #8b8578;
 }
 
-.pipeline__stage[data-state="run"] .pipeline__role { color: var(--orange); }
-
-.pipeline__task {
-  margin-top: 10px;
-  font-family: var(--mono);
+.rig__meters,
+.rig__ids,
+.rig__wire {
+  margin: 0;
   font-size: 11px;
-  line-height: 1.5;
+  letter-spacing: 0.04em;
+}
+
+.rig__meters {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: #8b8578;
+}
+
+/* Four columns, shared by the ids, the bus and the boxes. */
+.rig__ids,
+.rig__bus,
+.rig__stages {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.rig__ids {
+  margin-top: 14px;
   color: #6f6a5e;
 }
 
-/* Pinned to the foot of the box so the four stages read as a status board. */
-.pipeline__state {
-  margin-top: auto;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #8b8578;   /* was #4a463d — 1.68:1 on --card */
+.rig__ids span { text-align: center; }
+
+/* The bus: one rule across the top, a tick dropping into each box. */
+.rig__bus {
+  position: relative;
+  height: 26px;
+  margin-top: 8px;
 }
 
-.pipeline__stage[data-state="run"] .pipeline__state { color: var(--orange); }
-
-.pipeline__flow {
+.rig__rail {
   position: absolute;
-  top: 172px;
-  left: 32px;
-  right: 32px;
-  font-family: var(--mono);
+  top: 0;
+  left: 4px;
+  right: 4px;
+  height: 1px;
+  background: rgba(233, 229, 216, 0.28);
+}
+
+/* the head of the bus */
+.rig__rail::before {
+  content: "";
+  position: absolute;
+  left: -4px;
+  top: -3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--orange);
+}
+
+/* and its arrow */
+.rig__rail::after {
+  content: "";
+  position: absolute;
+  right: -4px;
+  top: -3.5px;
+  border-left: 7px solid rgba(233, 229, 216, 0.5);
+  border-block: 4px solid transparent;
+}
+
+.rig__tick {
+  position: relative;
+}
+
+.rig__tick::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(233, 229, 216, 0.22);
+}
+
+/* the marker sitting on the stage that is running */
+.rig__tick--here::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -4px;
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+  background: var(--orange);
+  transform: rotate(45deg);
+}
+
+.rig__tick--here::before { background: var(--orange); width: 2px; }
+
+/* -- the stage boxes ------------------------------------------------------- */
+
+.rig__stage {
+  padding: 9px 10px 10px;
+  border: 1px solid rgba(233, 229, 216, 0.22);
+  background: rgba(233, 229, 216, 0.02);
+}
+
+.rig__stage[data-state="run"] {
+  border-color: rgba(245, 67, 31, 0.55);
+  background: rgba(245, 67, 31, 0.06);
+}
+
+.rig__role {
   font-size: 11px;
-  letter-spacing: 0.24em;
-  color: #8b8578;   /* 4.32:1 on --card; #4a463d was 1.68:1 and invisible */
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #b8b2a5;
+}
+
+.rig__stage[data-state="run"] .rig__role { color: var(--orange); }
+.rig__stage[data-state="wait"] .rig__role { color: #6f6a5e; }
+
+/* Dithered bar — the texture is what makes it read as a terminal gauge
+   rather than a web progress bar. */
+.rig__bar {
+  position: relative;
+  height: 11px;
+  margin-top: 9px;
+  background-image: repeating-linear-gradient(90deg,
+    rgba(233, 229, 216, 0.18) 0 2px, transparent 2px 4px);
+}
+
+.rig__bar > span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--fill, 0%);
+  background-image: repeating-linear-gradient(90deg,
+    var(--orange) 0 2px, transparent 2px 4px);
+}
+
+.rig__stage[data-state="done"] .rig__bar > span {
+  background-image: repeating-linear-gradient(90deg,
+    rgba(184, 178, 165, 0.85) 0 2px, transparent 2px 4px);
+}
+
+.rig__status {
+  margin-top: 9px;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: #8b8578;
+}
+
+.rig__stage[data-state="run"] .rig__status { color: var(--orange); }
+.rig__stage[data-state="wait"] .rig__status { color: #6f6a5e; }
+.rig__status b { font-weight: 400; font-variant-numeric: tabular-nums; }
+
+.rig__wire {
+  margin-top: 14px;
+  text-align: center;
+  color: #6f6a5e;
 }
 
 
@@ -134,12 +245,14 @@
 
 .tile__body--narrow { max-width: 329px; }  /* 265px of text + 2 × 32px padding */
 
+/* Bottom right, under the copy rather than beside its first line — the card
+   is the consequence of the sentence above it, so it reads better below. */
 .approve {
   position: absolute;
-  top: 32px;
   right: 32px;
+  bottom: 32px;
   width: 268px;
-  padding: 18px;
+  padding: 20px;
   border-radius: var(--r-well);
   background: var(--card-2);
   border: 1px solid rgba(233, 229, 216, 0.10);
@@ -149,26 +262,26 @@
 .approve .status { color: #8b8578; }
 
 .approve__q {
-  margin-top: 12px;
+  margin-top: 16px;
   font-family: var(--font-display);
   font-size: 15px;
   font-weight: 500;
-  line-height: 1.35;
+  line-height: 1.45;
   color: var(--off-white);
 }
 
 .approve__meta {
-  margin-top: 10px;
+  margin-top: 14px;
   font-family: var(--mono);
   font-size: 11px;
-  line-height: 1.7;
+  line-height: 1.9;
   color: #6f6a5e;
 }
 
 .approve__actions {
   display: flex;
   gap: 8px;
-  margin-top: 16px;
+  margin-top: 20px;
 }
 
 .approve__btn {
@@ -215,17 +328,20 @@
 
   .bento__tile { height: 420px; }
 
-  /* Four horizontal stages at phone width are illegible — go vertical. */
-  .pipeline {
-    top: 210px;
-    bottom: 24px;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
+  /* Four stages side by side at phone width are illegible — go 2 x 2, and
+     drop the meter rows that need the full width to line up. */
+  .rig { top: 176px; }
 
-  .pipeline__flow  { display: none; }
+  .rig__ids,
+  .rig__stages { grid-template-columns: 1fr 1fr; }
+
+  .rig__meters { font-size: 10px; }
+  .rig__meters span:nth-child(n + 3) { display: none; }
+  .rig__bus,
+  .rig__ids,
+  .rig__wire { display: none; }
   .tile__art       { top: 168px; left: 50%; transform: translateX(-50%); width: calc(100% - 64px); }
   .tile__console   { top: 250px; }
-  .approve         { position: relative; top: 0; right: 0; width: auto; margin: 0 32px; }
+  .approve         { position: relative; inset: auto; width: auto; margin: 0 32px 32px; }
   .tile__body--narrow { max-width: none; }
 }

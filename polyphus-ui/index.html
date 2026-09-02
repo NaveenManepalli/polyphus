@@ -86,7 +86,7 @@
 
   <div class="hero__lede" data-words>
     <p>Describe your company in one sentence.<br>A crew of agents takes it from there.</p>
-    <p>They research, design, build and ship — then keep it running.</p>
+    <p>They research, design, build and ship - then keep it running.</p>
   </div>
 </header>
 
@@ -133,35 +133,54 @@
             <h6 class="kicker">It's a crew</h6>
             <h3 class="card__title">Work moves down the line, one agent to the <strong>next</strong>.</h3>
           </div>
-          <p class="pipeline__flow" aria-hidden="true">brief &rarr;&rarr;&rarr; research &rarr;&rarr;&rarr; design &rarr;&rarr;&rarr; build &rarr;&rarr;&rarr; ship</p>
-          <div class="pipeline" aria-hidden="true">
-            <div class="pipeline__stage" data-state="done">
-              <div class="pipeline__role">Research</div>
-              <p class="pipeline__task">market<br>sized</p>
-              <div class="pipeline__state">done</div>
+          <!-- The rig. Everything here is an illustration of the hand-off, not a
+               live feed — the only thing that moves is the BUILD bar, driven by
+               js/modules/rig.js. Monospace throughout so the meters, the ids and
+               the boxes all line up on the same grid. -->
+          <div class="rig" aria-hidden="true">
+            <p class="rig__meters"><span>agents 04</span><span>tasks/min 44</span><span>queue 04</span><span>uptime 100%</span></p>
+
+            <p class="rig__ids"><span>id:77bd</span><span>id:d0a5</span><span>id:b1c9</span><span>id:9fa0</span></p>
+
+            <div class="rig__bus">
+              <span class="rig__rail"></span>
+              <span class="rig__tick"></span>
+              <span class="rig__tick"></span>
+              <span class="rig__tick rig__tick--here"></span>
+              <span class="rig__tick"></span>
             </div>
-            <div class="pipeline__stage" data-state="done">
-              <div class="pipeline__role">Design</div>
-              <p class="pipeline__task">brand<br>set</p>
-              <div class="pipeline__state">done</div>
+
+            <div class="rig__stages">
+              <div class="rig__stage" data-state="done">
+                <div class="rig__role">RESEARCH</div>
+                <div class="rig__bar"><span style="--fill:100%"></span></div>
+                <div class="rig__status">done ✓</div>
+              </div>
+              <div class="rig__stage" data-state="done">
+                <div class="rig__role">DESIGN</div>
+                <div class="rig__bar"><span style="--fill:100%"></span></div>
+                <div class="rig__status">done ✓</div>
+              </div>
+              <div class="rig__stage" data-state="run">
+                <div class="rig__role">BUILD</div>
+                <div class="rig__bar" data-rig-bar><span style="--fill:32%"></span></div>
+                <div class="rig__status"><b data-rig-pct>32</b>%</div>
+              </div>
+              <div class="rig__stage" data-state="wait">
+                <div class="rig__role">MARKET</div>
+                <div class="rig__bar"><span style="--fill:0%"></span></div>
+                <div class="rig__status">queued</div>
+              </div>
             </div>
-            <div class="pipeline__stage" data-state="run">
-              <div class="pipeline__role">Build</div>
-              <p class="pipeline__task">writing<br>the app</p>
-              <div class="pipeline__state">running</div>
-            </div>
-            <div class="pipeline__stage" data-state="wait">
-              <div class="pipeline__role">Ship</div>
-              <p class="pipeline__task">queued</p>
-              <div class="pipeline__state">queued</div>
-            </div>
+
+            <p class="rig__wire">ok/s :: 42 msgs/s :: SHARED CONTEXT BUS :: 3.9k tok/s :: 4</p>
           </div>
         </article>
 
         <!-- Tile 2 — one sentence in -->
         <article class="card bento__tile" data-reveal data-delay="0.1s">
           <div class="card__body">
-            <h6 class="tile__headline">One sentence in.<br>A company out.</h6>
+            <h6 class="tile__headline">Build a company<br>in one sentence.</h6>
           </div>
           <img class="tile__art" src="assets/images/cloud-city.png" alt="" aria-hidden="true">
         </article>
@@ -361,7 +380,7 @@
       <h6 class="kicker">Solo founders</h6>
       <h5 class="h5">You have the idea. Not the time.</h5>
       <p>You already know what you want to build. What you don't have is six months, a co-founder, and the money for either.</p>
-      <ul class="features">
+      <ul class="features audience__features">
         <li class="feature">
           <span class="feature__chip"><img src="assets/icons/icon-sentence.svg" alt=""></span>
           <span class="feature__label">Start from one sentence, not a spec document</span>
@@ -389,7 +408,7 @@
       <h6 class="kicker">Businesses</h6>
       <h5 class="h5">You have a backlog a mile long.</h5>
       <p>The work is scoped and agreed. You just cannot hire fast enough to clear it, and every quarter the list gets longer.</p>
-      <ul class="features">
+      <ul class="features audience__features">
         <li class="feature">
           <span class="feature__chip"><img src="assets/icons/icon-build.svg" alt=""></span>
           <span class="feature__label">Hand a whole project over, not a single ticket</span>
@@ -409,6 +428,22 @@
 
 
 <!-- ==========================================================================
+     MEET OUR TEAM — the heading that introduces the photographs below it.
+     The names, logos and previous companies go in a grid between this and
+     the river once they land.
+     ========================================================================== -->
+<section class="section team" id="team">
+  <div class="section-head">
+    <h2 class="display" data-words>Meet our team.</h2>
+    <p class="section-head__lede" data-reveal>
+      The people building the crew &mdash; and the rooms we build it in.
+    </p>
+  </div>
+  <!-- team grid goes here -->
+</section>
+
+
+<!-- ==========================================================================
      THE RIVER — two rows of photographs drifting in opposite directions.
      Each row holds its images twice: the keyframes travel 0 → -50%, so the
      second copy is what makes the loop seamless. Add or remove an image and
@@ -417,37 +452,37 @@
 <section class="river" aria-label="Photographs from the community">
   <div class="river__track river__track--a">
     <!-- first pass -->
-      <img class="river__img" src="assets/images/bottom/1.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
-      <img class="river__img" src="assets/images/bottom/2.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
-      <img class="river__img" src="assets/images/bottom/3.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
-      <img class="river__img" src="assets/images/bottom/4.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
-      <img class="river__img" src="assets/images/bottom/5.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
-      <img class="river__img" src="assets/images/bottom/6.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
-      <img class="river__img" src="assets/images/bottom/7.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/1.jpeg" alt="" decoding="async" fetchpriority="low" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/2.jpeg" alt="" decoding="async" fetchpriority="low" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/3.jpeg" alt="" decoding="async" fetchpriority="low" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/4.jpeg" alt="" decoding="async" fetchpriority="low" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/5.jpeg" alt="" decoding="async" fetchpriority="low" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/6.jpeg" alt="" decoding="async" fetchpriority="low" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/7.jpeg" alt="" decoding="async" fetchpriority="low" width="4" height="3">
     <!-- second pass — the seamless half -->
-      <img class="river__img" src="assets/images/bottom/1.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
-      <img class="river__img" src="assets/images/bottom/2.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
-      <img class="river__img" src="assets/images/bottom/3.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
-      <img class="river__img" src="assets/images/bottom/4.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
-      <img class="river__img" src="assets/images/bottom/5.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
-      <img class="river__img" src="assets/images/bottom/6.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
-      <img class="river__img" src="assets/images/bottom/7.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/1.jpeg" alt="" aria-hidden="true" decoding="async" fetchpriority="low" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/2.jpeg" alt="" aria-hidden="true" decoding="async" fetchpriority="low" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/3.jpeg" alt="" aria-hidden="true" decoding="async" fetchpriority="low" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/4.jpeg" alt="" aria-hidden="true" decoding="async" fetchpriority="low" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/5.jpeg" alt="" aria-hidden="true" decoding="async" fetchpriority="low" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/6.jpeg" alt="" aria-hidden="true" decoding="async" fetchpriority="low" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/7.jpeg" alt="" aria-hidden="true" decoding="async" fetchpriority="low" width="4" height="3">
   </div>
   <div class="river__track river__track--b">
     <!-- first pass -->
-      <img class="river__img" src="assets/images/bottom/8.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
-      <img class="river__img" src="assets/images/bottom/9.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
-      <img class="river__img" src="assets/images/bottom/10.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
-      <img class="river__img" src="assets/images/bottom/11.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
-      <img class="river__img" src="assets/images/bottom/12.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
-      <img class="river__img" src="assets/images/bottom/13.jpeg" alt="" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/8.jpeg" alt="" decoding="async" fetchpriority="low" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/9.jpeg" alt="" decoding="async" fetchpriority="low" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/10.jpeg" alt="" decoding="async" fetchpriority="low" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/11.jpeg" alt="" decoding="async" fetchpriority="low" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/12.jpeg" alt="" decoding="async" fetchpriority="low" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/13.jpeg" alt="" decoding="async" fetchpriority="low" width="4" height="3">
     <!-- second pass — the seamless half -->
-      <img class="river__img" src="assets/images/bottom/8.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
-      <img class="river__img" src="assets/images/bottom/9.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
-      <img class="river__img" src="assets/images/bottom/10.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
-      <img class="river__img" src="assets/images/bottom/11.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
-      <img class="river__img" src="assets/images/bottom/12.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
-      <img class="river__img" src="assets/images/bottom/13.jpeg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/8.jpeg" alt="" aria-hidden="true" decoding="async" fetchpriority="low" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/9.jpeg" alt="" aria-hidden="true" decoding="async" fetchpriority="low" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/10.jpeg" alt="" aria-hidden="true" decoding="async" fetchpriority="low" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/11.jpeg" alt="" aria-hidden="true" decoding="async" fetchpriority="low" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/12.jpeg" alt="" aria-hidden="true" decoding="async" fetchpriority="low" width="4" height="3">
+      <img class="river__img" src="assets/images/bottom/13.jpeg" alt="" aria-hidden="true" decoding="async" fetchpriority="low" width="4" height="3">
   </div>
 </section>
 
@@ -515,6 +550,7 @@
 <script src="js/modules/smooth-scroll.js"></script>
 <script src="js/modules/parallax.js"></script>
 <script src="js/modules/reveal.js"></script>
+<script src="js/modules/rig.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

@@ -21,10 +21,12 @@
   background: var(--cream-2);
 }
 
-/* The factory-on-a-cloud crosses the panel's rounded top edge. */
+/* The cloud sits low enough that the headline lands on it. The headline is
+   after it in the DOM and .cta__head is positioned, so it paints in front —
+   dark ink on the bright middle of the cloud, which is the legible part. */
 .cta__cloud {
   position: absolute;
-  top: -60px;
+  top: 96px;
   left: 50%;
   transform: translateX(-50%);
   width: 792px;
@@ -33,7 +35,12 @@
   pointer-events: none;
 }
 
-.cta__head { position: relative; }
+/* z-index, not just source order: the cloud is a sibling and both are in the
+   same stacking context. */
+.cta__head {
+  position: relative;
+  z-index: 1;
+}
 
 .cta__lede {
   max-width: 612px;
@@ -80,7 +87,7 @@
     padding-bottom: 90px;
   }
 
-  .cta__cloud { top: -10px; width: 420px; }
+  .cta__cloud { top: 56px; width: 420px; }
   .cta__actions { margin-top: 36px; }
   .cta__fine i { padding-inline: 6px; }
 }

@@ -69,19 +69,60 @@ The logotype is **live text**, not an image — change the word, change the page
 that takes an email. It reuses the same tokens, fonts and components, and adds
 `css/sections/signup.css` + `js/modules/signup.js`.
 
-> **Before this goes live, set the endpoint.** The form in `start.html` has an
-> empty `data-endpoint` attribute:
+> **Before this goes live, connect Supabase.** Three steps:
+>
+> 1. Run `supabase/waitlist.sql` in the Supabase SQL editor. It creates the
+>    table, turns on row level security, and validates addresses server-side.
+> 2. Project Settings → API: copy the **Project URL** and the **`anon` public**
+>    key.
+> 3. Put both on the form in `start.html`:
 >
 > ```html
-> <form class="signup__form" data-signup data-endpoint="">
+> <form class="signup__form" data-signup
+>       data-supabase-url="https://xxxxx.supabase.co"
+>       data-supabase-key="eyJhbGciOi...">
 > ```
 >
-> Put a URL there — Formspree, Buttondown, ConvertKit, a Cloudflare Worker,
-> your own API; anything that takes a JSON POST of `{email, source}`. **Until
-> you do, addresses are kept in this browser's `localStorage` under
-> `polyphus:waitlist` and are sent nowhere.** The visitor still sees the
-> confirmation, so an unset endpoint is silent to them and loud only in the
-> console. Do not ship it unset.
+> The anon key ships in the page and anyone can read it — that is how Supabase
+> is meant to work. It is safe **only** because the SQL grants `anon` INSERT
+> and nothing else, so the key cannot read, edit or delete your list. If you
+> ever turn RLS off on that table, that public key becomes a way for anyone to
+> download every address you have collected.
+>
+> **Until both attributes are filled in, addresses go into the visitor's own
+> `localStorage` and reach you nowhere.** The confirmation still shows, so the
+> only signal is a console warning. Do not ship it that way.
+
+### What the form does
+
+- **Every provider is accepted.** No allow-list, no Gmail special case —
+  Outlook, Proton, iCloud, company domains, `.edu`, `.io`, `+` addressing and
+  non-ASCII domains all pass. The check only rejects genuinely malformed input.
+- **Addresses are normalised** (trimmed, lower-cased) before they are sent, and
+  the table has a `unique` constraint, so one person is one row however they
+  type it. A repeat signup trips that constraint, Supabase returns **409**, and
+  the form treats it as "already on the list".
+- **`anon` has INSERT and nothing else — not even SELECT.** Note that Supabase
+  does *not* give you this for free: its default privileges grant `anon` and
+  `authenticated` full rights on new tables in `public`, so a fresh table is
+  guarded by RLS alone. The `revoke all` in the SQL file is what actually
+  removes them — verified against a live project, where a `select` with the
+  public key returns **401**, not an empty list. That is deliberate,
+  and it is why duplicates are handled with a 409 rather than the more obvious
+  `INSERT ... ON CONFLICT DO NOTHING`: `ON CONFLICT` requires SELECT privilege
+  on the table, so using it would mean granting `anon` the right to read the
+  list and relying on RLS alone to filter it back out. One careless SELECT
+  policy later and the whole list is public. This way there is nothing to leak.
+- **A failed send is not lost.** It is queued in `localStorage` and retried the
+  next time that person opens the page.
+- **A honeypot field** catches bots that fill every input. They get the same
+  confirmation and nothing is sent — telling them they failed only teaches them
+  to pass.
+- **The browser check is a courtesy.** Anyone can bypass it from a console; the
+  `WITH CHECK` clause in the SQL is what actually holds.
+
+To export when you launch: Dashboard → Table Editor → `waitlist` → Export CSV,
+or `select email, created_at from public.waitlist order by created_at;`
 
 When the product itself is live, `start.html` becomes
 `https://app.polyphus.com` — it appears **9 times** in `index.html`, one

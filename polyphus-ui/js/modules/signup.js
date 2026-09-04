@@ -1,77 +1,180 @@
 /* ==========================================================================
    signup.js — the waitlist form.
 
-   IMPORTANT, BEFORE THIS PAGE GOES LIVE
-   -------------------------------------
-   The form needs somewhere to send the address. Put a URL in the form's
-   `data-endpoint` attribute in start.html:
+   SETUP (one time)
+   ----------------
+   1. Run supabase/waitlist.sql in the Supabase SQL editor.
+   2. Dashboard → Project Settings → API, copy the Project URL and the
+      `anon` `public` key.
+   3. Put them on the form in start.html:
 
-       <form class="signup__form" data-signup data-endpoint="https://...">
+        <form class="signup__form" data-signup
+              data-supabase-url="https://xxxxx.supabase.co"
+              data-supabase-key="eyJhbGciOi...">
 
-   Any service that accepts a JSON or form POST works — Formspree, Buttondown,
-   ConvertKit, a Cloudflare Worker, your own API.
+   The anon key is meant to be public — it ships in the page and anyone can
+   read it. It is safe only because the SQL file turns on row level security
+   and gives anon INSERT and nothing else. Do not disable RLS on that table.
 
-   With no endpoint set the page still confirms to the visitor, because that
-   is the flow the page is built around — but the address only ever reaches
-   this browser's localStorage. Nothing is emailed to you and nothing leaves
-   the device. Set the endpoint, or you are collecting nothing.
+   A plain `data-endpoint="https://..."` still works if you ever move to your
+   own API; it gets a JSON POST of { email, source, referrer }.
+
+   WITH NOTHING CONFIGURED the address is kept in this browser's localStorage
+   and reaches you nowhere. The visitor still sees the confirmation, so the
+   only signal is a console warning. Do not ship it that way.
    ========================================================================== */
 
-(function () {
+(function (WL) {
   'use strict';
 
-  var STORE_KEY = 'polyphus:waitlist';
+  var STORE_KEY   = 'polyphus:waitlist';
+  var PENDING_KEY = 'polyphus:waitlist:pending';
 
-  // Deliberately permissive. The point is to catch a typo, not to adjudicate
-  // what a valid address is — plenty of real ones look strange.
+  /* Deliberately permissive. The point is to catch a typo, not to adjudicate
+     what a valid address is — plenty of real ones look strange, and every
+     provider and TLD is welcome. The rule that actually holds is the WITH
+     CHECK clause in supabase/waitlist.sql; this one just runs first. */
   function looksLikeEmail(value) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
   }
 
-  function remember(email) {
+  /* One shape for the whole pipeline, so "was this person already added" is a
+     string comparison and not a judgement call. */
+  function normalise(value) {
+    return String(value || '').trim().toLowerCase();
+  }
+
+  /* --- local copies -------------------------------------------------------
+     Two lists. `STORE_KEY` is every address this browser has submitted;
+     `PENDING_KEY` is the ones that never made it to the server, retried on
+     the next visit so a dropped connection does not silently lose a signup. */
+
+  function readList(key) {
     try {
-      var raw = window.localStorage.getItem(STORE_KEY);
+      var raw = window.localStorage.getItem(key);
       var list = raw ? JSON.parse(raw) : [];
-      if (list.indexOf(email) === -1) list.push(email);
-      window.localStorage.setItem(STORE_KEY, JSON.stringify(list));
+      return Array.isArray(list) ? list : [];
     } catch (e) {
-      /* private window, blocked storage, quota — never block the flow on this */
+      return [];   // private window, blocked storage, corrupt value
     }
   }
 
-  function send(endpoint, email) {
-    if (!endpoint) {
-      console.warn(
-        '[polyphus] No data-endpoint on the waitlist form. The address was ' +
-        'kept in localStorage under "' + STORE_KEY + '" and sent nowhere. ' +
-        'Set data-endpoint in start.html before this page goes live.'
-      );
-      return Promise.resolve({ delivered: false });
+  function writeList(key, list) {
+    try {
+      window.localStorage.setItem(key, JSON.stringify(list));
+    } catch (e) {
+      /* quota or blocked storage — never block the flow on this */
     }
-    return fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({ email: email, source: 'polyphus-waitlist' })
-    }).then(function (res) {
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      return { delivered: true };
+  }
+
+  function addTo(key, email) {
+    var list = readList(key);
+    if (list.indexOf(email) === -1) {
+      list.push(email);
+      writeList(key, list);
+    }
+  }
+
+  function removeFrom(key, email) {
+    writeList(key, readList(key).filter(function (e) { return e !== email; }));
+  }
+
+  /* --- delivery ----------------------------------------------------------- */
+
+  function config(form) {
+    return {
+      url:      form.getAttribute('data-supabase-url'),
+      key:      form.getAttribute('data-supabase-key'),
+      table:    form.getAttribute('data-supabase-table') || 'waitlist',
+      endpoint: form.getAttribute('data-endpoint')
+    };
+  }
+
+  function send(cfg, payload) {
+    if (cfg.url && cfg.key) {
+      var endpoint = cfg.url.replace(/\/+$/, '') +
+                     '/rest/v1/' + encodeURIComponent(cfg.table);
+      return fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          apikey: cfg.key,
+          Authorization: 'Bearer ' + cfg.key,
+          Prefer: 'return=minimal'
+        },
+        body: JSON.stringify(payload)
+      }).then(function (res) {
+        /* 409 is the unique constraint firing: this address is already on the
+           list. That is a success from the visitor's point of view, and it is
+           how we dedupe without granting anon the SELECT privilege that
+           `ON CONFLICT` would require. See supabase/waitlist.sql. */
+        if (res.status === 409) return true;
+        if (!res.ok) {
+          return res.text().then(function (body) {
+            throw new Error('Supabase ' + res.status + ' ' + body.slice(0, 200));
+          });
+        }
+        return true;
+      });
+    }
+
+    if (cfg.endpoint) {
+      return fetch(cfg.endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return true;
+      });
+    }
+
+    console.warn(
+      '[polyphus] The waitlist form has no backend configured, so "' +
+      payload.email + '" was kept in localStorage ("' + STORE_KEY + '") and ' +
+      'sent nowhere. Set data-supabase-url and data-supabase-key in ' +
+      'start.html — see js/modules/signup.js and supabase/waitlist.sql.'
+    );
+    return Promise.reject(new Error('not configured'));
+  }
+
+  /* Anything that failed to reach the server last time, tried again quietly. */
+  function flushPending(cfg) {
+    if (!(cfg.url && cfg.key) && !cfg.endpoint) return;
+    readList(PENDING_KEY).forEach(function (email) {
+      send(cfg, { email: email, source: 'polyphus-waitlist', referrer: null })
+        .then(function () { removeFrom(PENDING_KEY, email); })
+        .catch(function () { /* still down; it stays queued */ });
     });
   }
+
+  /* --- wiring ------------------------------------------------------------- */
 
   function init() {
     var form = document.querySelector('[data-signup]');
     if (!form) return;
 
-    var root = document.querySelector('.signup');
-    var field = form.querySelector('.signup__field');
+    var root   = document.querySelector('.signup');
+    var field  = form.querySelector('.signup__field');
     var submit = form.querySelector('.signup__submit');
-    var note = document.querySelector('[data-signup-note]');
-    var mail = document.querySelector('[data-signup-mail]');
+    var trap   = form.querySelector('[data-signup-trap]');
+    var note   = document.querySelector('[data-signup-note]');
+    var mail   = document.querySelector('[data-signup-mail]');
+    var cfg    = config(form);
+
+    flushPending(cfg);
 
     function fail(message) {
       form.classList.add('is-invalid');
       if (note) note.textContent = message;
       field.focus();
+    }
+
+    function done(email) {
+      if (mail) mail.textContent = email;
+      if (root) root.classList.add('is-done');
+      var title = document.querySelector('.signup__done-title');
+      if (title) title.focus();
     }
 
     field.addEventListener('input', function () {
@@ -82,28 +185,39 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      var email = (field.value || '').trim();
+      var email = normalise(field.value);
       if (!email) return fail('enter an email address');
+      if (email.length > 254) return fail('that address is too long');
       if (!looksLikeEmail(email)) return fail('that does not look like an email address');
+
+      /* The honeypot is hidden from people and invisible to assistive tech,
+         so anything in it is a bot filling every field it can see. Show the
+         same confirmation and send nothing — telling it that it failed only
+         teaches it how to pass. */
+      if (trap && trap.value) return done(email);
 
       var label = submit.textContent;
       submit.disabled = true;
       submit.textContent = 'adding you…';
 
-      remember(email);   // keep it locally first, so a failed POST loses nothing
+      addTo(STORE_KEY, email);
 
-      send(form.getAttribute('data-endpoint'), email)
+      var payload = {
+        email: email,
+        source: 'polyphus-waitlist',
+        referrer: document.referrer ? document.referrer.slice(0, 512) : null
+      };
+
+      send(cfg, payload)
         .catch(function (err) {
-          // The address is already stored locally; tell the developer, and
-          // still confirm to the visitor rather than blaming them for our
-          // outage. Retrying is our problem, not theirs.
-          console.warn('[polyphus] waitlist POST failed:', err.message);
+          /* Queue it and tell the developer. The visitor still gets the
+             confirmation — a failure on our side is not their problem, and
+             flushPending will try again next time they open the page. */
+          addTo(PENDING_KEY, email);
+          console.warn('[polyphus] waitlist signup not delivered:', err.message);
         })
         .then(function () {
-          if (mail) mail.textContent = email;
-          if (root) root.classList.add('is-done');
-          var title = document.querySelector('.signup__done-title');
-          if (title) title.focus();
+          done(email);
           submit.disabled = false;
           submit.textContent = label;
         });
@@ -115,4 +229,4 @@
   } else {
     init();
   }
-})();
+})(window.WL = window.WL || {});

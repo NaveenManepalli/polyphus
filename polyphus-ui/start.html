@@ -45,10 +45,14 @@
       you the moment Polyphus can take your sentence &mdash; nothing else.
     </p>
 
-    <!-- Set data-endpoint before this page goes live. With it empty the
-         address is stored in this browser only and is emailed to nobody.
-         See js/modules/signup.js. -->
-    <form class="signup__form" data-signup data-endpoint="" novalidate>
+    <!-- Fill these two in before this page goes live. Until then the address
+         is stored in this browser only and reaches you nowhere.
+         Project Settings -> API in Supabase gives you both; run
+         supabase/waitlist.sql first. The anon key is meant to be public. -->
+    <form class="signup__form" data-signup
+          data-supabase-url="https://gpztoinbpjhgfackstyt.supabase.co"
+          data-supabase-key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdwenRvaW5icGpoZ2ZhY2tzdHl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg1MTQxMjcsImV4cCI6MjEwNDA5MDEyN30.bdpF7TCVMUwUYZz0yBQ9jnRwgwh1yj0Xm4oSJDKS3Hk"
+          novalidate>
       <label class="visually-hidden" for="signup-email">Your email address</label>
       <input class="signup__field"
              id="signup-email"
@@ -58,6 +62,15 @@
              autocomplete="email"
              placeholder="you@company.com"
              required>
+
+      <!-- Honeypot. Hidden from people and from screen readers, so only a bot
+           that fills every field will touch it. Not display:none — some bots
+           skip those. -->
+      <div class="signup__trap" aria-hidden="true">
+        <label for="signup-company">Company (leave this empty)</label>
+        <input id="signup-company" name="company" type="text"
+               tabindex="-1" autocomplete="off" data-signup-trap>
+      </div>
       <button class="btn btn--run signup__submit" type="submit">
         Notify me <img class="btn__icon" src="assets/icons/arrow-cream.svg" alt="">
       </button>

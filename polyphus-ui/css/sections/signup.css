@@ -173,6 +173,17 @@
 
 .signup__submit { flex: none; }
 
+/* The honeypot. Taken out of the layout and off the accessibility tree, but
+   NOT display:none — the better bots skip hidden fields, and the point is
+   that they should fill this one. */
+.signup__trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 /* Below the form: the error, or the confirmation that replaces it. */
 .signup__note {
   margin-top: 16px;

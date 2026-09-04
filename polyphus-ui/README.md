@@ -44,6 +44,14 @@ keep them apart. Log lines are lowercase with a `>` prefix and no full stop.
 | Footer | `sections/footer.css` | *hire agents. run everything.* |
 | Waitlist | `sections/signup.css` | `start.html` — coming soon + email capture |
 
+**Analytics.** GA4 is loaded from `js/analytics.js` — the measurement ID lives
+there and nowhere else, so it is not duplicated across the two pages. Besides
+page views it sends one event, `sign_up`, with `method: waitlist` and an
+`outcome` of `new`, `existing` or `undelivered`. Bots caught by the honeypot
+and addresses rejected by validation send nothing, so the conversion count
+stays honest. **No email address is ever sent to Analytics** — that would be
+personal data, which Google's terms forbid.
+
 ## 3. The hero rig
 
 Four cut-out plates, each 1440 × 2572. On scroll,

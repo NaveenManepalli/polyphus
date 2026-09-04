@@ -108,7 +108,7 @@
            list. That is a success from the visitor's point of view, and it is
            how we dedupe without granting anon the SELECT privilege that
            `ON CONFLICT` would require. See supabase/waitlist.sql. */
-        if (res.status === 409) return true;
+        if (res.status === 409) return 'existing';
         if (!res.ok) {
           return res.text().then(function (body) {
             throw new Error('Supabase ' + res.status + ' ' + body.slice(0, 200));
@@ -177,6 +177,17 @@
       if (title) title.focus();
     }
 
+    /* GA4's own recommended event name, so it lands in the standard reports
+       rather than needing a custom definition. `outcome` separates a genuine
+       new address from someone signing up twice and from a signup we failed
+       to deliver — without those, a wave of repeat visits looks like growth.
+
+       No email address here, ever. Sending one to Analytics would be personal
+       data, which Google's terms forbid. Counts and categories only. */
+    function trackSignup(outcome) {
+      if (WL.track) WL.track('sign_up', { method: 'waitlist', outcome: outcome });
+    }
+
     field.addEventListener('input', function () {
       form.classList.remove('is-invalid');
       if (note) note.textContent = '';
@@ -194,7 +205,7 @@
          so anything in it is a bot filling every field it can see. Show the
          same confirmation and send nothing — telling it that it failed only
          teaches it how to pass. */
-      if (trap && trap.value) return done(email);
+      if (trap && trap.value) return done(email);   // no tracking: not a person
 
       var label = submit.textContent;
       submit.disabled = true;
@@ -208,16 +219,23 @@
         referrer: document.referrer ? document.referrer.slice(0, 512) : null
       };
 
+      var outcome = 'new';
+
       send(cfg, payload)
+        .then(function (result) {
+          if (result === 'existing') outcome = 'existing';
+        })
         .catch(function (err) {
           /* Queue it and tell the developer. The visitor still gets the
              confirmation — a failure on our side is not their problem, and
              flushPending will try again next time they open the page. */
+          outcome = 'undelivered';
           addTo(PENDING_KEY, email);
           console.warn('[polyphus] waitlist signup not delivered:', err.message);
         })
         .then(function () {
           done(email);
+          trackSignup(outcome);
           submit.disabled = false;
           submit.textContent = label;
         });
